@@ -1,0 +1,18 @@
+PORT=4000
+MONGO_URI="mongodb+srv://msarvi19082000:SsC3aaf9a95PRb7N@villacluster.wcsta.mongodb.net/villaDB?retryWrites=true&w=majority&appName=villaCluster"
+
+
+
+# mongodb+srv://krishikesh2001:Krakesh21@cluster0.yy87f5m.mongodb.net/VillaDB?retryWrites=true&w=majority&appName=Cluster0
+FRONTEND_URL=http://localhost:5173
+
+CLOUDINARY_CLOUD_NAME=dc6khfycq
+CLOUDINARY_API_KEY=565973174726636
+
+
+CLOUDINARY_API_SECRET=wGkuDZ1pj7oazcGmwI98A2i-6Eo
+CLOUDINARY_UPLOAD_PRESET=guest_profile_upload
+# MONGO_URI2=mongodb+srv://Thanu:Thanu23@cluster3.hdavn.mongodb.net/Villa_booking?retryWrites=true&w=majority&appName=Cluster3
+
+# OPENAI_API_KEY=CJ518zXIGSyOxk4gRJMenvs2kvrpSE3C1sS_zaAyOhDm80C4i0ETNffGScxZa4YW6Le6Oz6I_JT3Blb
+# kFJARiNObPYeklTkZRr11d8KXfLozN0JhQLrr81Jsddv3MbZ9jBMopZKm_7cgqwUnRQpOik1nMx4A

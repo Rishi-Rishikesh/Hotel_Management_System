@@ -1,0 +1,52 @@
+{
+  "name": "frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@chatscope/chat-ui-kit-react": "^2.0.3",
+    "@cloudinary/react": "^1.14.1",
+    "@cloudinary/url-gen": "^1.21.0",
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "@headlessui/react": "^2.2.0",
+    "@tailwindcss/postcss": "^4.0.9",
+    "axios": "^1.9.0",
+    "bad-words": "^4.0.0",
+    "clsx": "^2.1.1",
+    "docx": "^9.5.0",
+    "dotenv-webpack": "^8.1.0",
+    "firebase": "^11.7.1",
+    "firebase-admin": "^13.3.0",
+    "framer-motion": "^12.11.0",
+    "html2pdf.js": "^0.10.3",
+    "inputmask": "^5.0.9",
+    "jspdf": "^3.0.1",
+    "jspdf-autotable": "^5.0.2",
+    "lucide-react": "^0.486.0",
+    "postcss": "^8.5.3",
+    "react": "^18.3.1",
+    "react-calendar": "^5.1.0",
+    "react-cookie": "^8.0.1",
+    "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.5.2",
+    "react-icons": "^5.5.0",
+    "react-input-mask": "^2.0.4",
+    "react-router-dom": "^7.6.0",
+    "react-toastify": "^11.0.5",
+    "socket.io-client": "^4.8.1",
+    "tailwindcss": "^4.0.9"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
+    "@vitejs/plugin-react": "^4.4.1",
+    "vite": "^6.3.2"
+  }
+}

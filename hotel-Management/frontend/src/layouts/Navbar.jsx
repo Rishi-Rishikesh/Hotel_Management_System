@@ -55,7 +55,7 @@ const Navbar = () => {
   ];
 
   const getDashboardPath = () => {
-    if (role === "Admin") return "/admin-dashboard";
+    if (role === "Admin") return "/guestdashboard";
     if (role === "Staff") return "/staff-dashboard";
     return "/guestdashboard";
   };

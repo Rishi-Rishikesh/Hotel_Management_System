@@ -338,14 +338,12 @@ const Login = ({ setUserRole }) => {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="mt-6 text-center"
         >
-          <button
-            onClick={handleLogout}
-            disabled={isSubmitting}
-            className={`text-sm text-gray-600 hover:text-gray-800 transition-colors ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""
-              }`}
+          <Link
+            to="/forgotpassword"
+            className="text-sm text-blue-600 hover:text-blue-700 transition-colors"
           >
-            Logout
-          </button>
+            Forgot Password?
+          </Link>
           <p className="text-sm text-gray-600 mt-2">
             Don't have an account?{" "}
             <Link

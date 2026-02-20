@@ -5,6 +5,7 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  sendPasswordResetEmail,
   connectAuthEmulator,
 } from "firebase/auth";
 
@@ -30,7 +31,7 @@ const auth = getAuth(app);
 // Uncomment the line below if you want to use Firebase Auth Emulator for local testing
 // connectAuthEmulator(auth, "http://localhost:9099");
 
-export { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword };
+export { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail };
 
 
 

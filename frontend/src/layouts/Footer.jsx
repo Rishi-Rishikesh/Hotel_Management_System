@@ -1,110 +1,82 @@
 import React from "react";
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaMapMarkerAlt, FaPhone, FaFax } from "react-icons/fa";
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaMapMarkerAlt, FaPhone, FaEnvelope } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-r from-blue-800 to-blue-600 text-white py-12 px-4">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-        {/* Brand Info */}
-        <div className="space-y-4">
-          <h3 className="text-2xl font-bold text-white">Anuthama Villa</h3>
-          <p className="text-blue-100">
-            We provide exceptional service and products to help businesses grow
-            and thrive. Our team is committed to excellence and customer
-            satisfaction.
+    <footer className="bg-gray-950 text-white pt-24 pb-12 border-t border-white/5">
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-12 gap-16">
+        {/* Brand Column */}
+        <div className="md:col-span-5 space-y-8">
+          <div className="flex flex-col -space-y-1">
+            <span className="text-3xl font-black tracking-tighter">ANUTHAMA</span>
+            <span className="text-xs font-bold text-blue-500 tracking-[0.4em] uppercase">Boutique Villa</span>
+          </div>
+          <p className="text-gray-500 text-lg font-serif italic max-w-sm leading-relaxed">
+            "Where every sunset tells a story, and every stay becomes a timeless memory."
           </p>
-          <div className="flex gap-4">
-            <a
-              href="https://facebook.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white hover:text-blue-200 transition-colors"
-            >
-              <FaFacebook size={20} />
-            </a>
-            <a
-              href="https://twitter.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white hover:text-blue-200 transition-colors"
-            >
-              <FaTwitter size={20} />
-            </a>
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white hover:text-blue-200 transition-colors"
-            >
-              <FaInstagram size={20} />
-            </a>
-            <a
-              href="https://linkedin.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white hover:text-blue-200 transition-colors"
-            >
-              <FaLinkedin size={20} />
-            </a>
+          <div className="flex gap-6">
+            {[FaFacebook, FaTwitter, FaInstagram, FaLinkedin].map((Icon, i) => (
+              <a
+                key={i}
+                href="#"
+                className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-blue-500 hover:bg-blue-500/10 transition-all duration-300"
+              >
+                <Icon size={18} />
+              </a>
+            ))}
           </div>
         </div>
 
-        {/* Contact Info */}
-        <div className="space-y-4">
-          <h3 className="text-xl font-bold text-white">Contact Info</h3>
-          <div className="flex items-start gap-3">
-            <FaMapMarkerAlt className="mt-1 text-blue-200" />
-            <p className="text-blue-100">123 Business Ave, City, Country</p>
-          </div>
-          <div className="flex items-center gap-3">
-            <FaPhone className="text-blue-200" />
-            <p className="text-blue-100">077-692-6012</p>
-          </div>
-          <div className="flex items-center gap-3">
-            <FaFax className="text-blue-200" />
-            <p className="text-blue-100">+123 456 788</p>
+        {/* Info Column */}
+        <div className="md:col-span-4 space-y-8">
+          <h3 className="text-sm font-black text-gray-400 uppercase tracking-[0.3em]">Contact</h3>
+          <div className="space-y-6">
+            <div className="flex items-start gap-4 text-gray-400 group">
+              <FaMapMarkerAlt className="mt-1 text-blue-500" size={18} />
+              <p className="font-medium group-hover:text-white transition-colors leading-relaxed">
+                29 Sri Sudharmarama Mawatha,<br />Wattala, Sri Lanka
+              </p>
+            </div>
+            <div className="flex items-center gap-4 text-gray-400 group">
+              <FaPhone className="text-blue-500" size={18} />
+              <p className="font-medium group-hover:text-white transition-colors">+94 123 456 789</p>
+            </div>
+            <div className="flex items-center gap-4 text-gray-400 group">
+              <FaEnvelope className="text-blue-500" size={18} />
+              <p className="font-medium group-hover:text-white transition-colors">hello@anuthamavilla.lk</p>
+            </div>
           </div>
         </div>
 
-        {/* Quick Links */}
-        <div className="space-y-4">
-          <h3 className="text-xl font-bold text-white">Quick Links</h3>
-          <ul className="space-y-2">
-            <li>
-              <Link 
-                to="/about" 
-                className="text-blue-100 hover:text-white transition-colors flex items-center gap-2"
-              >
-                <span className="w-2 h-2 bg-blue-300 rounded-full"></span>
-                About Us
-              </Link>
-            </li>
-            {/* <li>
-              <Link 
-                to="/services" 
-                className="text-blue-100 hover:text-white transition-colors flex items-center gap-2"
-              >
-                <span className="w-2 h-2 bg-blue-300 rounded-full"></span>
-                Services
-              </Link>
-            </li> */}
-            <li>
-              <Link 
-                to="/contactus" 
-                className="text-blue-100 hover:text-white transition-colors flex items-center gap-2"
-              >
-                <span className="w-2 h-2 bg-blue-300 rounded-full"></span>
-                Contact Us
-              </Link>
-            </li>
+        {/* Links Column */}
+        <div className="md:col-span-3 space-y-8">
+          <h3 className="text-sm font-black text-gray-400 uppercase tracking-[0.3em]">Explore</h3>
+          <ul className="space-y-4">
+            {['About', 'Rooms', 'Dining', 'Privacy Policy'].map(item => (
+              <li key={item}>
+                <Link
+                  to={item === 'About' ? '/about' : '#'}
+                  className="text-gray-400 hover:text-blue-500 font-medium transition-colors flex items-center gap-2 group"
+                >
+                  <div className="w-1.5 h-1.5 bg-blue-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+                  {item}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
 
-      {/* Copyright */}
-      <div className="border-t border-blue-400 mt-8 pt-6 text-center text-blue-100 text-sm">
-        <p>&copy; {new Date().getFullYear()} Anuthama Villa. All rights reserved.</p>
+      {/* Underline & Copyright */}
+      <div className="max-w-7xl mx-auto px-6 mt-20 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+        <p className="text-gray-600 text-sm font-medium">
+          © {new Date().getFullYear()} Anuthama Boutique Villa. Handcrafted Excellence.
+        </p>
+        <div className="flex gap-8 text-gray-600 text-xs font-black uppercase tracking-widest">
+          <a href="#" className="hover:text-white transition-colors">Terms</a>
+          <a href="#" className="hover:text-white transition-colors">Sitemap</a>
+        </div>
       </div>
     </footer>
   );

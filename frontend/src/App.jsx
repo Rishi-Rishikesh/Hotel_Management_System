@@ -105,7 +105,7 @@ function App() {
     <CookiesProvider>
       <BrowserRouter>
         <AuthProvider>
-          <div className="min-h-screen bg-gradient-to-b from-teal-50 to-orange-50">
+          <div className="min-h-screen bg-[#fafafa]">
             <NavbarSelector />
 
             <ToastContainer position="top-right" autoClose={3000} />

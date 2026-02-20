@@ -67,8 +67,9 @@ function NavbarSelector() {
     return null;
   }
 
-  // Dashboard/Management paths that should show AdminNavbar for privileged users
-  const adminPaths = [
+  // Define paths that belong to the Management Dashboard
+  const managementPaths = [
+    "/guestdashboard",
     "/admin-dashboard",
     "/staff-dashboard",
     "/rooms",
@@ -78,23 +79,22 @@ function NavbarSelector() {
     "/staff-management",
     "/bookings",
     "/inventory",
-    "/schedule",
     "/history",
+    "/settings",
+    "/finances",
+    "/schedule",
     "/adminorder",
     "/adminchat"
   ];
 
-  const isManagementPath = adminPaths.some(path => location.startsWith(path));
+  const isManagementPath = managementPaths.some(path => location.startsWith(path));
 
-  // Show AdminNavbar ONLY if user is Admin/Staff AND they are on a management path
-  if ((role === "Admin" || role === "Staff") && isManagementPath) {
+  // If logged in AND on a management path, show Sidebar Navbar (for Admin, Staff, or Guest)
+  if (token && isManagementPath) {
     return <AdminNavbar />;
   }
 
-  // Default to the premium customer Navbar for everyone else:
-  // 1. Unauthenticated visitors
-  // 2. Logged in "User" role
-  // 3. Admin/Staff when they are browsing public pages (Home, Room Booking, etc.)
+  // Otherwise, show the premium customer Navbar (for Guests, Users, and Admins/Staff on public pages)
   return <Navbar />;
 }
 

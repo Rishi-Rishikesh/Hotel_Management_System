@@ -28,10 +28,9 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Scroll visibility effect
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -55,194 +54,182 @@ const Navbar = () => {
     { name: "Contact", path: "/contactus", icon: Mail },
   ];
 
-  const getDashboardLink = () => {
-    if (role === "Admin") return { name: "Admin Panel", path: "/admin-dashboard", icon: Shield };
-    if (role === "Staff") return { name: "Staff Portal", path: "/staff-dashboard", icon: Shield };
-    return { name: "My Dashboard", path: "/guestdashboard", icon: User };
+  const getDashboardPath = () => {
+    if (role === "Admin") return "/admin-dashboard";
+    if (role === "Staff") return "/staff-dashboard";
+    return "/guestdashboard";
   };
-
-  const dashboardLink = getDashboardLink();
 
   return (
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled
-        ? "bg-white/80 backdrop-blur-md shadow-lg py-2"
-        : "bg-transparent py-4 text-white"
+      className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${isScrolled
+        ? "bg-white/90 backdrop-blur-xl shadow-xl py-3 border-b border-gray-100"
+        : "bg-transparent py-6"
         }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
         <div className="flex items-center justify-between">
-          {/* Brand Identity */}
-          <Link to="/" className="flex items-center space-x-2 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-blue-400 flex items-center justify-center shadow-lg group-hover:rotate-6 transition-transform">
-              <Shield className="text-white" size={22} />
+          <Link to="/" className="flex items-center space-x-3 group">
+            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-500 flex items-center justify-center shadow-2xl group-hover:rotate-6 transition-all duration-300 ring-2 ring-blue-100 group-hover:ring-blue-200">
+              <Shield className="text-white" size={24} />
             </div>
-            <span className={`text-2xl font-bold tracking-tight transition-colors ${isScrolled ? "text-gray-900" : "text-blue-900"
+            <span className={`text-2xl font-black tracking-tight transition-colors duration-300 ${isScrolled ? "text-gray-900" : "text-gray-900"
               }`}>
-              Anuthama<span className="text-blue-600">Villa</span>
+              Anuthama<span className="text-blue-600 font-serif italic ml-1">Villa</span>
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            <div className="flex items-center space-x-6">
+          <div className="hidden md:flex items-center space-x-10">
+            <div className="flex items-center space-x-8">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   to={link.path}
-                  className={`flex items-center space-x-1 font-medium transition-all hover:text-blue-600 ${location.pathname === link.path
-                    ? "text-blue-600 border-b-2 border-blue-600"
-                    : isScrolled ? "text-gray-600" : "text-gray-700"
+                  className={`relative group px-1 py-1 font-bold text-sm uppercase tracking-widest transition-all ${location.pathname === link.path
+                    ? "text-blue-600"
+                    : "text-gray-500 hover:text-blue-600"
                     }`}
                 >
-                  <link.icon size={16} />
-                  <span>{link.name}</span>
+                  <span className="relative z-10">{link.name}</span>
+                  <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-blue-600 transition-transform duration-300 origin-right ${location.pathname === link.path ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100 group-hover:origin-left"
+                    }`} />
                 </Link>
               ))}
             </div>
 
-            <div className="h-6 w-px bg-gray-200 mx-2" />
+            <div className="h-6 w-px bg-gray-200" />
 
             {token ? (
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-6">
                 <Link
-                  to={dashboardLink.path}
-                  className="flex items-center space-x-2 bg-blue-600 text-white px-5 py-2.5 rounded-xl font-semibold shadow-md hover:bg-blue-700 transition-all hover:shadow-lg active:scale-95"
+                  to={getDashboardPath()}
+                  className="flex items-center space-x-2 bg-gray-900 text-white px-7 py-3 rounded-2xl font-black text-sm uppercase tracking-wider shadow-2xl shadow-gray-200 hover:bg-blue-600 transition-all active:scale-95"
                 >
-                  <dashboardLink.icon size={18} />
-                  <span>{dashboardLink.name}</span>
+                  <User size={18} />
+                  <span>Dashboard</span>
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="p-2.5 rounded-xl bg-gray-100 text-gray-600 hover:bg-red-50 hover:text-red-600 transition-all"
-                  title="Logout"
+                  className="p-3 rounded-2xl bg-gray-50 text-gray-400 hover:bg-red-50 hover:text-red-500 transition-all border border-gray-100"
                 >
                   <LogOut size={20} />
                 </button>
               </div>
             ) : (
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-5">
                 <Link
                   to="/login"
-                  className={`${isScrolled ? "text-gray-700" : "text-gray-700"} font-semibold hover:text-blue-600 px-4`}
+                  className="text-gray-600 font-black text-sm uppercase tracking-widest hover:text-blue-600 transition-colors"
                 >
-                  Sign In
+                  Login
                 </Link>
                 <Link
                   to="/signup"
-                  className="bg-blue-600 text-white px-6 py-2.5 rounded-xl font-semibold shadow-md hover:bg-blue-700 transition-all"
+                  className="bg-blue-600 text-white px-8 py-3.5 rounded-2xl font-black text-sm uppercase tracking-wider shadow-xl shadow-blue-100 hover:bg-blue-700 transition-all active:scale-95"
                 >
-                  Sign Up
+                  Join Us
                 </Link>
               </div>
             )}
           </div>
 
-          {/* Mobile Navigation Toggle */}
-          <div className="md:hidden flex items-center space-x-4">
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg bg-gray-100 text-gray-600 focus:outline-none"
-            >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
+          <button
+            onClick={() => setMobileMenuOpen(true)}
+            className="md:hidden p-3 rounded-2xl bg-gray-50 text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-all border border-gray-100"
+          >
+            <Menu size={24} />
+          </button>
         </div>
       </div>
 
-      {/* Mobile Sidebar */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, x: 300 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 300 }}
-            className="fixed inset-y-0 right-0 w-full max-w-sm bg-white shadow-2xl z-50 md:hidden flex flex-col"
-          >
-            <div className="p-6 flex items-center justify-between border-b border-gray-100">
-              <span className="text-xl font-bold text-gray-900 font-serifitalic">Anuthama Villa</span>
-              <button
-                onClick={() => setMobileMenuOpen(false)}
-                className="p-2 rounded-lg bg-gray-100 text-gray-600"
-              >
-                <X size={24} />
-              </button>
-            </div>
-
-            <div className="flex-1 overflow-y-auto px-6 py-8 space-y-4">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  to={link.path}
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMobileMenuOpen(false)}
+              className="fixed inset-0 bg-gray-900/60 backdrop-blur-sm z-[110]"
+            />
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed inset-y-0 right-0 w-full max-w-sm bg-white shadow-2xl z-[120] flex flex-col"
+            >
+              <div className="p-8 flex items-center justify-between border-b border-gray-50">
+                <span className="text-xl font-black tracking-tighter">Anuthama <span className="text-blue-600 italic">Villa</span></span>
+                <button
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between p-4 rounded-xl bg-gray-50 text-gray-800 font-medium hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                  className="p-3 rounded-2xl bg-gray-50 text-gray-400 hover:text-gray-900 transition-colors"
                 >
-                  <div className="flex items-center space-x-4">
-                    <link.icon size={20} className="text-blue-600" />
-                    <span>{link.name}</span>
-                  </div>
-                  <ChevronRight size={18} className="text-gray-400" />
-                </Link>
-              ))}
-
-              <div className="pt-8 space-y-4">
-                {token ? (
-                  <>
-                    <Link
-                      to={dashboardLink.path}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center justify-between p-4 rounded-xl bg-blue-600 text-white font-semibold shadow-lg shadow-blue-200"
-                    >
-                      <div className="flex items-center space-x-4">
-                        <dashboardLink.icon size={20} />
-                        <span>{dashboardLink.name}</span>
-                      </div>
-                      <ChevronRight size={18} />
-                    </Link>
-                    <button
-                      onClick={handleLogout}
-                      className="flex items-center justify-center space-x-2 w-full p-4 rounded-xl bg-red-50 text-red-600 font-semibold hover:bg-red-100 transition-colors"
-                    >
-                      <LogOut size={20} />
-                      <span>Logout</span>
-                    </button>
-                  </>
-                ) : (
-                  <div className="grid grid-cols-2 gap-4">
-                    <Link
-                      to="/login"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center justify-center p-4 rounded-xl border border-gray-200 text-gray-700 font-semibold"
-                    >
-                      Sign In
-                    </Link>
-                    <Link
-                      to="/signup"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center justify-center p-4 rounded-xl bg-blue-600 text-white font-semibold"
-                    >
-                      Sign Up
-                    </Link>
-                  </div>
-                )}
+                  <X size={24} />
+                </button>
               </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
-      {/* Overlay for Mobile Menu */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setMobileMenuOpen(false)}
-            className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 md:hidden"
-          />
+              <div className="flex-1 px-8 py-10 space-y-4">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.name}
+                    to={link.path}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center justify-between p-5 rounded-3xl bg-gray-50 text-gray-900 font-black text-sm uppercase tracking-widest hover:bg-blue-50 hover:text-blue-600 transition-all group"
+                  >
+                    <div className="flex items-center space-x-5">
+                      <link.icon size={22} className="text-gray-400 group-hover:text-blue-500" />
+                      <span>{link.name}</span>
+                    </div>
+                    <ChevronRight size={18} className="text-gray-300 group-hover:translate-x-1 group-hover:text-blue-400" />
+                  </Link>
+                ))}
+
+                <div className="pt-10 space-y-5">
+                  {token ? (
+                    <>
+                      <Link
+                        to={getDashboardPath()}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center justify-between p-6 rounded-[2rem] bg-gray-900 text-white font-black text-sm uppercase tracking-widest shadow-2xl"
+                      >
+                        <div className="flex items-center space-x-5">
+                          <User size={22} />
+                          <span>My Profile</span>
+                        </div>
+                        <ChevronRight size={20} />
+                      </Link>
+                      <button
+                        onClick={handleLogout}
+                        className="w-full p-6 text-center text-red-500 font-black text-sm uppercase tracking-widest hover:bg-red-50 rounded-3xl transition-all"
+                      >
+                        Sign Out
+                      </button>
+                    </>
+                  ) : (
+                    <div className="grid gap-4">
+                      <Link
+                        to="/login"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="p-6 text-center border-2 border-gray-100 rounded-3xl font-black text-sm uppercase tracking-widest text-gray-900 hover:border-gray-900 transition-all"
+                      >
+                        Sign In
+                      </Link>
+                      <Link
+                        to="/signup"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="p-6 text-center bg-blue-600 text-white rounded-3xl font-black text-sm uppercase tracking-widest shadow-lg shadow-blue-100"
+                      >
+                        Create Account
+                      </Link>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </motion.nav>
@@ -250,3 +237,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

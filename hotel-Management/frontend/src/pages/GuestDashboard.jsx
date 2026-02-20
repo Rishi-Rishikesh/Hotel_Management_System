@@ -94,7 +94,7 @@ function GuestDashboard() {
       const combinedReservations = [...roomBookings, ...hallBookings].filter(
         (res) => res && res._id
       );
-      
+
       setReservations(combinedReservations);
       localStorage.setItem("reservations", JSON.stringify(combinedReservations));
     } catch (error) {
@@ -205,9 +205,9 @@ function GuestDashboard() {
 
     if (hasReservation) {
       return reservations.some(
-        res => res?.type === 'room' && 
-        date >= new Date(res.checkInDate) && 
-        date <= new Date(res.checkOutDate)
+        res => res?.type === 'room' &&
+          date >= new Date(res.checkInDate) &&
+          date <= new Date(res.checkOutDate)
       ) ? 'bg-blue-100' : 'bg-purple-100';
     }
     return isToday ? 'bg-green-100' : '';
@@ -277,277 +277,393 @@ function GuestDashboard() {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-gradient-to-r from-blue-700 to-blue-600 text-white shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Villa Guest Portal</h1>
-          <div className="flex items-center space-x-4">
-            <button 
-              onClick={() => navigate('/updateprofile')}
-              className="flex items-center space-x-2 bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg transition-all"
-            >
-              <FaUser className="text-white" />
-              <span>Profile</span>
-            </button>
-            <button 
-              onClick={handleLogout}
-              className="flex items-center space-x-2 bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg transition-all"
-            >
-              <FaSignOutAlt className="text-white" />
-              <span>Logout</span>
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Welcome Card */}
-      {/* Welcome Card - Enhanced Version */}
-<motion.div
-  initial={{ opacity: 0, y: -20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.6 }}
-  className="bg-white rounded-xl shadow-md overflow-hidden mb-8"
->
-  <div className="p-8">
-    <div className="flex flex-col md:flex-row items-center">
-      {/* Profile Image - Larger Size */}
-      <div className="flex-shrink-0 mb-6 md:mb-0 md:mr-8">
-        <img
-          src={profileImage}
-          alt="Profile"
-          className="w-32 h-32 rounded-full border-4 border-blue-100 object-cover"
-          onError={(e) => (e.target.src = defaultAvatar)}
-        />
-      </div>
-      
-      {/* Welcome Text - Larger and More Prominent */}
-      <div className="text-center md:text-left">
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">
-          Welcome back, <span className="text-blue-600">{user.fname || 'Guest'}</span>
-        </h2>
-        <p className="text-xl text-gray-600 mb-6">We're delighted to have you stay with us</p>
-        
-        {/* Stats - Larger and Better Spaced */}
-        <div className="grid grid-cols-3 gap-6">
-          <div className="bg-blue-50 px-6 py-4 rounded-lg">
-            <p className="text-lg text-gray-600 mb-1">Total Bookings</p>
-            <p className="text-2xl font-semibold text-blue-600">{reservations.length}</p>
-          </div>
-          <div className="bg-blue-50 px-6 py-4 rounded-lg">
-            <p className="text-lg text-gray-600 mb-1">Upcoming Stays</p>
-            <p className="text-2xl font-semibold text-blue-600">
-              {reservations.filter(r => r.type === 'room' && new Date(r.checkInDate) >= new Date()).length}
-            </p>
-          </div>
-          <div className="bg-blue-50 px-6 py-4 rounded-lg">
-            <p className="text-lg text-gray-600 mb-1">Upcoming Events</p>
-            <p className="text-2xl font-semibold text-blue-600">
-              {reservations.filter(r => r.type === 'event' && new Date(r.eventDate) >= new Date()).length}
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</motion.div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column - Services */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Room Booking Card */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              whileHover={{ y: -5 }}
-              transition={{ duration: 0.4 }}
-              className="bg-white rounded-xl shadow-md overflow-hidden"
-            >
-              <div className="flex flex-col md:flex-row">
-                <div className="md:w-1/3">
-                  <img src={roomImage} alt="Room" className="w-full h-full object-cover" />
+    <div className="min-h-screen bg-gray-50 lg:pl-64">
+      <div className="pt-20"> {/* Offset for the top navbar */}
+        {/* Main Content */}
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          {/* Welcome Card */}
+          {/* Welcome Card - Enhanced Version */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="bg-white rounded-xl shadow-md overflow-hidden mb-8"
+          >
+            <div className="p-8">
+              <div className="flex flex-col md:flex-row items-center">
+                {/* Profile Image - Larger Size */}
+                <div className="flex-shrink-0 mb-6 md:mb-0 md:mr-8">
+                  <img
+                    src={profileImage}
+                    alt="Profile"
+                    className="w-32 h-32 rounded-full border-4 border-blue-100 object-cover"
+                    onError={(e) => (e.target.src = defaultAvatar)}
+                  />
                 </div>
-                <div className="p-6 md:w-2/3">
-                  <div className="flex items-center mb-3">
-                    <div className="p-2 bg-blue-100 rounded-lg mr-3">
-                      <FaBed className="text-blue-600 text-xl" />
+
+                {/* Welcome Text - Larger and More Prominent */}
+                <div className="text-center md:text-left">
+                  <h2 className="text-3xl font-bold text-gray-800 mb-2">
+                    Welcome back, <span className="text-blue-600">{user.fname || 'Guest'}</span>
+                  </h2>
+                  <p className="text-xl text-gray-600 mb-6">We're delighted to have you stay with us</p>
+
+                  {/* Stats - Larger and Better Spaced */}
+                  <div className="grid grid-cols-3 gap-6">
+                    <div className="bg-blue-50 px-6 py-4 rounded-lg">
+                      <p className="text-lg text-gray-600 mb-1">Total Bookings</p>
+                      <p className="text-2xl font-semibold text-blue-600">{reservations.length}</p>
                     </div>
-                    <h3 className="text-xl font-semibold text-gray-800">Book a Room</h3>
+                    <div className="bg-blue-50 px-6 py-4 rounded-lg">
+                      <p className="text-lg text-gray-600 mb-1">Upcoming Stays</p>
+                      <p className="text-2xl font-semibold text-blue-600">
+                        {reservations.filter(r => r.type === 'room' && new Date(r.checkInDate) >= new Date()).length}
+                      </p>
+                    </div>
+                    <div className="bg-blue-50 px-6 py-4 rounded-lg">
+                      <p className="text-lg text-gray-600 mb-1">Upcoming Events</p>
+                      <p className="text-2xl font-semibold text-blue-600">
+                        {reservations.filter(r => r.type === 'event' && new Date(r.eventDate) >= new Date()).length}
+                      </p>
+                    </div>
                   </div>
-                  <p className="text-gray-600 mb-6">Experience luxury accommodation with our premium rooms and suites.</p>
-                  <button
-                    onClick={() => user.fname ? navigate('/roombooking') : (toast.error('Please complete your profile') || navigate('/updateprofile'))}
-                    className="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white py-3 rounded-lg hover:from-blue-700 hover:to-blue-600 transition-all shadow-md"
-                  >
-                    Book Now
-                  </button>
                 </div>
               </div>
-            </motion.div>
-
-            {/* Event Booking Card */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              whileHover={{ y: -5 }}
-              transition={{ duration: 0.4, delay: 0.1 }}
-              className="bg-white rounded-xl shadow-md overflow-hidden"
-            >
-              <div className="flex flex-col md:flex-row">
-                <div className="md:w-1/3">
-                  <img src={eventImage} alt="Event" className="w-full h-full object-cover" />
-                </div>
-                <div className="p-6 md:w-2/3">
-                  <div className="flex items-center mb-3">
-                    <div className="p-2 bg-blue-100 rounded-lg mr-3">
-                      <FaCalendar className="text-blue-600 text-xl" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-gray-800">Book an Event</h3>
+            </div>
+          </motion.div>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Left Column - Services */}
+            <div className="lg:col-span-2 space-y-6">
+              {/* Room Booking Card */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                whileHover={{ y: -5 }}
+                transition={{ duration: 0.4 }}
+                className="bg-white rounded-xl shadow-md overflow-hidden"
+              >
+                <div className="flex flex-col md:flex-row">
+                  <div className="md:w-1/3">
+                    <img src={roomImage} alt="Room" className="w-full h-full object-cover" />
                   </div>
-                  <p className="text-gray-600 mb-6">Host your special occasions in our elegant event spaces.</p>
+                  <div className="p-6 md:w-2/3">
+                    <div className="flex items-center mb-3">
+                      <div className="p-2 bg-blue-100 rounded-lg mr-3">
+                        <FaBed className="text-blue-600 text-xl" />
+                      </div>
+                      <h3 className="text-xl font-semibold text-gray-800">Book a Room</h3>
+                    </div>
+                    <p className="text-gray-600 mb-6">Experience luxury accommodation with our premium rooms and suites.</p>
+                    <button
+                      onClick={() => user.fname ? navigate('/roombooking') : (toast.error('Please complete your profile') || navigate('/updateprofile'))}
+                      className="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white py-3 rounded-lg hover:from-blue-700 hover:to-blue-600 transition-all shadow-md"
+                    >
+                      Book Now
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Event Booking Card */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                whileHover={{ y: -5 }}
+                transition={{ duration: 0.4, delay: 0.1 }}
+                className="bg-white rounded-xl shadow-md overflow-hidden"
+              >
+                <div className="flex flex-col md:flex-row">
+                  <div className="md:w-1/3">
+                    <img src={eventImage} alt="Event" className="w-full h-full object-cover" />
+                  </div>
+                  <div className="p-6 md:w-2/3">
+                    <div className="flex items-center mb-3">
+                      <div className="p-2 bg-blue-100 rounded-lg mr-3">
+                        <FaCalendar className="text-blue-600 text-xl" />
+                      </div>
+                      <h3 className="text-xl font-semibold text-gray-800">Book an Event</h3>
+                    </div>
+                    <p className="text-gray-600 mb-6">Host your special occasions in our elegant event spaces.</p>
+                    <button
+                      onClick={() => user.fname ? navigate('/eventbooking') : (toast.error('Please complete your profile') || navigate('/updateprofile'))}
+                      className="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white py-3 rounded-lg hover:from-blue-700 hover:to-blue-600 transition-all shadow-md"
+                    >
+                      Book Now
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Feedback Card */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                whileHover={{ y: -5 }}
+                transition={{ duration: 0.4, delay: 0.2 }}
+                className="bg-white rounded-xl shadow-md overflow-hidden"
+              >
+                <div className="flex flex-col md:flex-row">
+                  <div className="md:w-1/3">
+                    <img src={feedbackImage} alt="Feedback" className="w-full h-full object-cover" />
+                  </div>
+                  <div className="p-6 md:w-2/3">
+                    <div className="flex items-center mb-3">
+                      <div className="p-2 bg-blue-100 rounded-lg mr-3">
+                        <FaStar className="text-blue-600 text-xl" />
+                      </div>
+                      <h3 className="text-xl font-semibold text-gray-800">Share Feedback</h3>
+                    </div>
+                    <p className="text-gray-600 mb-6">We value your opinion to help us improve our services.</p>
+                    <button
+                      onClick={() => user.fname ? navigate('/feedbackmanagement') : (toast.error('Please complete your profile') || navigate('/updateprofile'))}
+                      className="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white py-3 rounded-lg hover:from-blue-700 hover:to-blue-600 transition-all shadow-md"
+                    >
+                      Submit Feedback
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Food Ordering Card */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                whileHover={{ y: -5 }}
+                transition={{ duration: 0.4, delay: 0.3 }}
+                className="bg-white rounded-xl shadow-md overflow-hidden"
+              >
+                <div className="flex flex-col md:flex-row">
+                  <div className="md:w-1/3">
+                    <img src={foodImage} alt="Food" className="w-full h-full object-cover" />
+                  </div>
+                  <div className="p-6 md:w-2/3">
+                    <div className="flex items-center mb-3">
+                      <div className="p-2 bg-blue-100 rounded-lg mr-3">
+                        <FaUtensils className="text-blue-600 text-xl" />
+                      </div>
+                      <h3 className="text-xl font-semibold text-gray-800">Dining Services</h3>
+                    </div>
+                    <p className="text-gray-600 mb-6">Explore our exquisite menu and culinary offerings.</p>
+                    <button
+                      onClick={() => user.fname ? navigate('/foodordering') : (toast.error('Please complete your profile') || navigate('/updateprofile'))}
+                      className="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white py-3 rounded-lg hover:from-blue-700 hover:to-blue-600 transition-all shadow-md"
+                    >
+                      Order Food
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Right Column - Info Panels */}
+            <div className="space-y-6">
+              {/* Calendar Panel */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="bg-white rounded-xl shadow-md overflow-hidden"
+              >
+                <div className="p-6">
+                  <div className="flex justify-between items-center mb-4">
+                    <h3 className="text-lg font-semibold text-gray-800">Your Reservations Calendar</h3>
+                    <button
+                      onClick={() => fetchReservations()}
+                      className="text-blue-600 hover:text-blue-700 p-2 rounded-full hover:bg-blue-50"
+                      title="Refresh"
+                    >
+                      <FaSync />
+                    </button>
+                  </div>
+                  <Calendar
+                    value={selectedDate}
+                    onChange={setSelectedDate}
+                    onClickDay={handleDateClick}
+                    tileClassName={tileClassName}
+                    tileContent={tileContent}
+                    className="border-none w-full"
+                  />
+                  <div className="flex justify-center space-x-4 mt-4">
+                    <div className="flex items-center">
+                      <div className="w-3 h-3 rounded-full bg-blue-500 mr-2"></div>
+                      <span className="text-sm text-gray-600">Room</span>
+                    </div>
+                    <div className="flex items-center">
+                      <div className="w-3 h-3 rounded-full bg-purple-500 mr-2"></div>
+                      <span className="text-sm text-gray-600">Event</span>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Upcoming Reservations Panel */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="bg-white rounded-xl shadow-md overflow-hidden"
+              >
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-4">Upcoming Reservations</h3>
+                  {upcomingReservations.length > 0 ? (
+                    <div className="space-y-4">
+                      {upcomingReservations.map((res) => (
+                        <div key={res._id} className="border-b border-gray-100 pb-4 last:border-0">
+                          <div className="flex justify-between items-start">
+                            <div>
+                              <h4 className="font-medium text-gray-800">
+                                {res.type === 'room' ? `Room ${res.roomNumber}` : `Event: ${res.eventType}`}
+                              </h4>
+                              <p className="text-sm text-gray-600">
+                                {res.type === 'room'
+                                  ? `${new Date(res.checkInDate).toLocaleDateString()} - ${new Date(res.checkOutDate).toLocaleDateString()}`
+                                  : new Date(res.eventDate).toLocaleDateString()}
+                              </p>
+                            </div>
+                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${res.bookingStatus?.toLowerCase() === 'confirmed' ? 'bg-green-100 text-green-800' :
+                              res.bookingStatus?.toLowerCase() === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                                res.bookingStatus?.toLowerCase() === 'cancelled' ? 'bg-red-100 text-red-800' :
+                                  'bg-gray-100 text-gray-800'
+                              }`}>
+                              {res.bookingStatus}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center py-4">
+                      <p className="text-gray-500">No upcoming reservations</p>
+                    </div>
+                  )}
                   <button
-                    onClick={() => user.fname ? navigate('/eventbooking') : (toast.error('Please complete your profile') || navigate('/updateprofile'))}
-                    className="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white py-3 rounded-lg hover:from-blue-700 hover:to-blue-600 transition-all shadow-md"
+                    onClick={() => navigate('/bookinghistory')}
+                    className="w-full mt-4 bg-blue-50 text-blue-600 py-2 rounded-lg hover:bg-blue-100 transition-colors"
                   >
-                    Book Now
+                    View All Bookings
                   </button>
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
 
-            {/* Feedback Card */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              whileHover={{ y: -5 }}
-              transition={{ duration: 0.4, delay: 0.2 }}
-              className="bg-white rounded-xl shadow-md overflow-hidden"
-            >
-              <div className="flex flex-col md:flex-row">
-                <div className="md:w-1/3">
-                  <img src={feedbackImage} alt="Feedback" className="w-full h-full object-cover" />
-                </div>
-                <div className="p-6 md:w-2/3">
-                  <div className="flex items-center mb-3">
-                    <div className="p-2 bg-blue-100 rounded-lg mr-3">
-                      <FaStar className="text-blue-600 text-xl" />
+              {/* Reviews Panel */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className="bg-white rounded-xl shadow-md overflow-hidden"
+              >
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-4">Your Reviews</h3>
+                  {userReviews.length > 0 ? (
+                    <div className="space-y-4">
+                      {userReviews.slice(0, 3).map((review) => (
+                        <div key={review._id} className="border-b border-gray-100 pb-4 last:border-0">
+                          <div className="flex justify-between">
+                            <h4 className="font-medium text-gray-800">
+                              {review.type === 'room' ? `Room ${review.itemId}` : `Hall ${review.itemId}`}
+                            </h4>
+                            <div className="flex">
+                              {[...Array(5)].map((_, i) => (
+                                <FaStar
+                                  key={i}
+                                  className={`${i < review.rating ? 'text-yellow-400' : 'text-gray-300'} text-sm`}
+                                />
+                              ))}
+                            </div>
+                          </div>
+                          <p className="text-sm text-gray-600 mt-1">{review.comment}</p>
+                          <div className="flex justify-between items-center mt-2">
+                            <span className="text-xs text-gray-500">
+                              {new Date(review.createdAt).toLocaleDateString()}
+                            </span>
+                            <div className="flex space-x-2">
+                              <button
+                                onClick={() => handleEditReview(review)}
+                                className="text-xs text-blue-600 hover:text-blue-700"
+                              >
+                                Edit
+                              </button>
+                              <button
+                                onClick={() => handleDeleteReview(review._id)}
+                                className="text-xs text-red-600 hover:text-red-700"
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                    <h3 className="text-xl font-semibold text-gray-800">Share Feedback</h3>
-                  </div>
-                  <p className="text-gray-600 mb-6">We value your opinion to help us improve our services.</p>
-                  <button
-                    onClick={() => user.fname ? navigate('/feedbackmanagement') : (toast.error('Please complete your profile') || navigate('/updateprofile'))}
-                    className="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white py-3 rounded-lg hover:from-blue-700 hover:to-blue-600 transition-all shadow-md"
-                  >
-                    Submit Feedback
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Food Ordering Card */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              whileHover={{ y: -5 }}
-              transition={{ duration: 0.4, delay: 0.3 }}
-              className="bg-white rounded-xl shadow-md overflow-hidden"
-            >
-              <div className="flex flex-col md:flex-row">
-                <div className="md:w-1/3">
-                  <img src={foodImage} alt="Food" className="w-full h-full object-cover" />
-                </div>
-                <div className="p-6 md:w-2/3">
-                  <div className="flex items-center mb-3">
-                    <div className="p-2 bg-blue-100 rounded-lg mr-3">
-                      <FaUtensils className="text-blue-600 text-xl" />
+                  ) : (
+                    <div className="text-center py-4">
+                      <p className="text-gray-500">No reviews submitted yet</p>
                     </div>
-                    <h3 className="text-xl font-semibold text-gray-800">Dining Services</h3>
-                  </div>
-                  <p className="text-gray-600 mb-6">Explore our exquisite menu and culinary offerings.</p>
-                  <button
-                    onClick={() => user.fname ? navigate('/foodordering') : (toast.error('Please complete your profile') || navigate('/updateprofile'))}
-                    className="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white py-3 rounded-lg hover:from-blue-700 hover:to-blue-600 transition-all shadow-md"
-                  >
-                    Order Food
-                  </button>
+                  )}
+                  {reviewableReservations.length > 0 && (
+                    <button
+                      onClick={() => navigate('/feedbackmanagement')}
+                      className="w-full mt-4 bg-blue-50 text-blue-600 py-2 rounded-lg hover:bg-blue-100 transition-colors"
+                    >
+                      Leave New Review
+                    </button>
+                  )}
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            </div>
           </div>
+        </main>
 
-          {/* Right Column - Info Panels */}
-          <div className="space-y-6">
-            {/* Calendar Panel */}
+        {/* Reservation Details Popup */}
+        {showPopup && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="bg-white rounded-xl shadow-md overflow-hidden"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="bg-white rounded-xl shadow-xl max-w-md w-full max-h-[80vh] overflow-y-auto"
             >
               <div className="p-6">
                 <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg font-semibold text-gray-800">Your Reservations Calendar</h3>
+                  <h3 className="text-xl font-semibold text-gray-800">
+                    Reservations on {selectedDate.toLocaleDateString()}
+                  </h3>
                   <button
-                    onClick={() => fetchReservations()}
-                    className="text-blue-600 hover:text-blue-700 p-2 rounded-full hover:bg-blue-50"
-                    title="Refresh"
+                    onClick={() => setShowPopup(false)}
+                    className="text-gray-500 hover:text-gray-700"
                   >
-                    <FaSync />
+                    ✕
                   </button>
                 </div>
-                <Calendar
-                  value={selectedDate}
-                  onChange={setSelectedDate}
-                  onClickDay={handleDateClick}
-                  tileClassName={tileClassName}
-                  tileContent={tileContent}
-                  className="border-none w-full"
-                />
-                <div className="flex justify-center space-x-4 mt-4">
-                  <div className="flex items-center">
-                    <div className="w-3 h-3 rounded-full bg-blue-500 mr-2"></div>
-                    <span className="text-sm text-gray-600">Room</span>
-                  </div>
-                  <div className="flex items-center">
-                    <div className="w-3 h-3 rounded-full bg-purple-500 mr-2"></div>
-                    <span className="text-sm text-gray-600">Event</span>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Upcoming Reservations Panel */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="bg-white rounded-xl shadow-md overflow-hidden"
-            >
-              <div className="p-6">
-                <h3 className="text-lg font-semibold text-gray-800 mb-4">Upcoming Reservations</h3>
-                {upcomingReservations.length > 0 ? (
+                {popupReservations.length > 0 ? (
                   <div className="space-y-4">
-                    {upcomingReservations.map((res) => (
+                    {popupReservations.map((res) => (
                       <div key={res._id} className="border-b border-gray-100 pb-4 last:border-0">
-                        <div className="flex justify-between items-start">
+                        <h4 className="font-medium text-gray-800">
+                          {res.type === 'room' ? `Room ${res.roomNumber}` : `Event: ${res.eventType}`}
+                        </h4>
+                        <div className="grid grid-cols-2 gap-2 mt-2">
                           <div>
-                            <h4 className="font-medium text-gray-800">
-                              {res.type === 'room' ? `Room ${res.roomNumber}` : `Event: ${res.eventType}`}
-                            </h4>
-                            <p className="text-sm text-gray-600">
-                              {res.type === 'room'
-                                ? `${new Date(res.checkInDate).toLocaleDateString()} - ${new Date(res.checkOutDate).toLocaleDateString()}`
-                                : new Date(res.eventDate).toLocaleDateString()}
+                            <p className="text-xs text-gray-500">
+                              {res.type === 'room' ? 'Check-in' : 'Date'}
+                            </p>
+                            <p className="text-sm text-gray-800">
+                              {new Date(res.type === 'room' ? res.checkInDate : res.eventDate).toLocaleDateString()}
                             </p>
                           </div>
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                            res.bookingStatus?.toLowerCase() === 'confirmed' ? 'bg-green-100 text-green-800' :
+                          {res.type === 'room' && (
+                            <div>
+                              <p className="text-xs text-gray-500">Check-out</p>
+                              <p className="text-sm text-gray-800">
+                                {new Date(res.checkOutDate).toLocaleDateString()}
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                        <div className="mt-2">
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${res.bookingStatus?.toLowerCase() === 'confirmed' ? 'bg-green-100 text-green-800' :
                             res.bookingStatus?.toLowerCase() === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                            res.bookingStatus?.toLowerCase() === 'cancelled' ? 'bg-red-100 text-red-800' :
-                            'bg-gray-100 text-gray-800'
-                          }`}>
+                              res.bookingStatus?.toLowerCase() === 'cancelled' ? 'bg-red-100 text-red-800' :
+                                'bg-gray-100 text-gray-800'
+                            }`}>
                             {res.bookingStatus}
                           </span>
                         </div>
@@ -555,167 +671,28 @@ function GuestDashboard() {
                     ))}
                   </div>
                 ) : (
-                  <div className="text-center py-4">
-                    <p className="text-gray-500">No upcoming reservations</p>
+                  <div className="text-center py-8">
+                    <p className="text-gray-500">No reservations on this date</p>
                   </div>
-                )}
-                <button
-                  onClick={() => navigate('/bookinghistory')}
-                  className="w-full mt-4 bg-blue-50 text-blue-600 py-2 rounded-lg hover:bg-blue-100 transition-colors"
-                >
-                  View All Bookings
-                </button>
-              </div>
-            </motion.div>
-
-            {/* Reviews Panel */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="bg-white rounded-xl shadow-md overflow-hidden"
-            >
-              <div className="p-6">
-                <h3 className="text-lg font-semibold text-gray-800 mb-4">Your Reviews</h3>
-                {userReviews.length > 0 ? (
-                  <div className="space-y-4">
-                    {userReviews.slice(0, 3).map((review) => (
-                      <div key={review._id} className="border-b border-gray-100 pb-4 last:border-0">
-                        <div className="flex justify-between">
-                          <h4 className="font-medium text-gray-800">
-                            {review.type === 'room' ? `Room ${review.itemId}` : `Hall ${review.itemId}`}
-                          </h4>
-                          <div className="flex">
-                            {[...Array(5)].map((_, i) => (
-                              <FaStar
-                                key={i}
-                                className={`${i < review.rating ? 'text-yellow-400' : 'text-gray-300'} text-sm`}
-                              />
-                            ))}
-                          </div>
-                        </div>
-                        <p className="text-sm text-gray-600 mt-1">{review.comment}</p>
-                        <div className="flex justify-between items-center mt-2">
-                          <span className="text-xs text-gray-500">
-                            {new Date(review.createdAt).toLocaleDateString()}
-                          </span>
-                          <div className="flex space-x-2">
-                            <button
-                              onClick={() => handleEditReview(review)}
-                              className="text-xs text-blue-600 hover:text-blue-700"
-                            >
-                              Edit
-                            </button>
-                            <button
-                              onClick={() => handleDeleteReview(review._id)}
-                              className="text-xs text-red-600 hover:text-red-700"
-                            >
-                              Delete
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="text-center py-4">
-                    <p className="text-gray-500">No reviews submitted yet</p>
-                  </div>
-                )}
-                {reviewableReservations.length > 0 && (
-                  <button
-                    onClick={() => navigate('/feedbackmanagement')}
-                    className="w-full mt-4 bg-blue-50 text-blue-600 py-2 rounded-lg hover:bg-blue-100 transition-colors"
-                  >
-                    Leave New Review
-                  </button>
                 )}
               </div>
             </motion.div>
           </div>
-        </div>
-      </main>
+        )}
 
-      {/* Reservation Details Popup */}
-      {showPopup && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="bg-white rounded-xl shadow-xl max-w-md w-full max-h-[80vh] overflow-y-auto"
-          >
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-semibold text-gray-800">
-                  Reservations on {selectedDate.toLocaleDateString()}
-                </h3>
-                <button
-                  onClick={() => setShowPopup(false)}
-                  className="text-gray-500 hover:text-gray-700"
-                >
-                  ✕
-                </button>
-              </div>
-              {popupReservations.length > 0 ? (
-                <div className="space-y-4">
-                  {popupReservations.map((res) => (
-                    <div key={res._id} className="border-b border-gray-100 pb-4 last:border-0">
-                      <h4 className="font-medium text-gray-800">
-                        {res.type === 'room' ? `Room ${res.roomNumber}` : `Event: ${res.eventType}`}
-                      </h4>
-                      <div className="grid grid-cols-2 gap-2 mt-2">
-                        <div>
-                          <p className="text-xs text-gray-500">
-                            {res.type === 'room' ? 'Check-in' : 'Date'}
-                          </p>
-                          <p className="text-sm text-gray-800">
-                            {new Date(res.type === 'room' ? res.checkInDate : res.eventDate).toLocaleDateString()}
-                          </p>
-                        </div>
-                        {res.type === 'room' && (
-                          <div>
-                            <p className="text-xs text-gray-500">Check-out</p>
-                            <p className="text-sm text-gray-800">
-                              {new Date(res.checkOutDate).toLocaleDateString()}
-                            </p>
-                          </div>
-                        )}
-                      </div>
-                      <div className="mt-2">
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                          res.bookingStatus?.toLowerCase() === 'confirmed' ? 'bg-green-100 text-green-800' :
-                          res.bookingStatus?.toLowerCase() === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                          res.bookingStatus?.toLowerCase() === 'cancelled' ? 'bg-red-100 text-red-800' :
-                          'bg-gray-100 text-gray-800'
-                        }`}>
-                          {res.bookingStatus}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="text-center py-8">
-                  <p className="text-gray-500">No reservations on this date</p>
-                </div>
-              )}
-            </div>
-          </motion.div>
-        </div>
-      )}
-
-      {/* Floating Chat Button */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        className="fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg cursor-pointer z-40"
-        onClick={() => navigate('/chat')}
-        title="Chat with Support"
-      >
-        <FaComment className="text-xl" />
-      </motion.div>
+        {/* Floating Chat Button */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          className="fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg cursor-pointer z-40"
+          onClick={() => navigate('/chat')}
+          title="Chat with Support"
+        >
+          <FaComment className="text-xl" />
+        </motion.div>
+      </div>
     </div>
   );
 }

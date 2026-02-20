@@ -46,7 +46,7 @@ const AdminNavbar = () => {
         { to: "/history", label: "Inventory History", icon: Notebook },
         { to: "/settings", label: "Settings", icon: Settings },
       ];
-    } else if (role === "Guest" || !role) { // Default or Guest
+    } else if (role === "Guest" || role === "User" || !role) { // Default or Guest or User role
       return [
         { to: "/guestdashboard", label: "My Dashboard", icon: Home },
         { to: "/roombooking", label: "Book Rooms", icon: Calendar },
@@ -118,6 +118,7 @@ const AdminNavbar = () => {
 
     if (role === "Admin") return adminItems;
     if (role === "Staff") return staffItems;
+    if (role === "Guest" || role === "User" || !role) return guestItems;
     return guestItems;
   };
 
@@ -128,7 +129,7 @@ const AdminNavbar = () => {
       {/* Desktop Persistent Sidebar */}
       <aside className="hidden lg:flex fixed inset-y-0 left-0 w-64 flex-col bg-gradient-to-b from-blue-900 to-blue-800 text-white z-50 shadow-2xl">
         <div className="p-6 border-b border-blue-700/50">
-          <Link to="/admin-dashboard" className="flex items-center space-x-3 group">
+          <Link to={role === "Admin" ? "/admin-dashboard" : role === "Staff" ? "/staff-dashboard" : "/guestdashboard"} className="flex items-center space-x-3 group">
             <div className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 group-hover:scale-110 transition-transform">
               <Shield className="text-white" size={24} />
             </div>

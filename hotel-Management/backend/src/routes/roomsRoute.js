@@ -7,6 +7,7 @@ const router = express.Router();
 
 console.log("Registering room routes...");
 
+router.get("/public", getRooms);
 router.get("/", authMiddleware(["User", "Admin"]), getRooms);
 router.get("/staff", authMiddleware(["Staff"]), async (req, res) => {
   try {

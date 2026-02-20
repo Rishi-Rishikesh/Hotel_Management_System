@@ -36,8 +36,8 @@ const ServiceSection = () => {
               whileTap={{ scale: 0.9 }}
               className="bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300 cursor-pointer hover:bg-blue-800 hover:text-gray-200"
             >
-              <Link to="/signup" className="block w-full h-full text-center">
-                Click Here To Book
+              <Link to="/roombooking" className="block w-full h-full text-center">
+                Check Availability
               </Link>
             </motion.button>
             <motion.button

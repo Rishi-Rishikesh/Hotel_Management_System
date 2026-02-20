@@ -26,6 +26,7 @@ import schedulePeriodicCleaning from "./cron.js";
 import "./src/models/Booking.model.js";
 import "./src/models/Task.js";
 import "./src/models/guestModel.js";
+import Room from "./src/models/Room.js";
 
 dotenv.config();
 
@@ -92,6 +93,37 @@ app.get("/", (req, res) => {
   res.json({ success: true, message: "Server is running" });
 });
 
+// Room Seeding Function
+const seedDefaultRooms = async () => {
+  try {
+    const roomCount = await Room.countDocuments();
+    if (roomCount === 0) {
+      const defaultRooms = [
+        {
+          roomNumber: "101",
+          type: "Single",
+          pricePerNight: 5000,
+          capacity: 1,
+          description: "Comfortable single room with essential amenities.",
+          status: "available",
+        },
+        {
+          roomNumber: "102",
+          type: "Double",
+          pricePerNight: 8500,
+          capacity: 2,
+          description: "Spacious double room perfect for couples.",
+          status: "available",
+        },
+      ];
+      await Room.insertMany(defaultRooms);
+      console.log("Default rooms seeded successfully.");
+    }
+  } catch (error) {
+    console.error("Error seeding default rooms:", error);
+  }
+};
+
 app.use("/api/guests/public", authLimiter);
 app.use("/api/guests", guestRoutes);
 app.use("/api/bookings/rooms", roomBookingRoutes);
@@ -129,6 +161,7 @@ app.post("/api/guests/upload", upload.single("profileImage"), (req, res) => {
 
 // Start server
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`Server running at http://localhost:${PORT}`);
+  await seedDefaultRooms();
 });

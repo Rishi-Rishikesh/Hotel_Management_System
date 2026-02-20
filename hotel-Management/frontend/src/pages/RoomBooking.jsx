@@ -22,7 +22,7 @@ const RoomBooking = () => {
     female: 0,
     child: 0,
     selectedRoom: null,
- 
+
   });
 
   const [rooms, setRooms] = useState([]);
@@ -48,15 +48,14 @@ const RoomBooking = () => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         setCurrentUserId(user.uid);
-        fetchRooms();
-        if (roomNumber && refreshReviews) {
-          fetchReviews(roomNumber);
-        }
-      } else {
-        toast.error('Please log in to view rooms');
-        navigate('/login');
+      }
+      // Always fetch rooms regardless of auth state
+      fetchRooms(!!user);
+      if (roomNumber && refreshReviews && user) {
+        fetchReviews(roomNumber);
       }
     });
+
     document.body.style.overflow = showModal ? 'hidden' : 'auto';
     return () => {
       document.body.style.overflow = 'auto';
@@ -64,16 +63,24 @@ const RoomBooking = () => {
     };
   }, [showModal, navigate, roomNumber, refreshReviews]);
 
-  const fetchRooms = async () => {
+  const fetchRooms = async (isAuthenticated) => {
     setIsLoading(true);
     try {
-      const token = await auth.currentUser.getIdToken();
-      const response = await api.get('/api/rooms', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      let response;
+      if (isAuthenticated) {
+        const token = await auth.currentUser.getIdToken();
+        response = await api.get('/api/rooms', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+      } else {
+        response = await api.get('/api/rooms/public');
+      }
+
       if (response.data.success) {
+        const roomsToMap = Array.isArray(response.data.rooms) ? response.data.rooms :
+          Array.isArray(response.data.data) ? response.data.data : [];
         setRooms(
-          response.data.rooms.map((room) => ({
+          roomsToMap.map((room) => ({
             number: room.roomNumber,
             rating: 4.7,
             price: `LKR ${room.pricePerNight}`,
@@ -150,11 +157,11 @@ const RoomBooking = () => {
   //         checkIn,
   //         checkOut,
   //       },
-        // {
-        //   headers: { Authorization: `Bearer ${token}` },
-        // }
-      // );
-      // return response.data.success;
+  // {
+  //   headers: { Authorization: `Bearer ${token}` },
+  // }
+  // );
+  // return response.data.success;
   //   }
   //    catch (error) {
   //     console.error('checkRoomAvailability - Error:', error.message, error.response?.data);
@@ -261,6 +268,11 @@ const RoomBooking = () => {
   };
 
   const handleBookNow = async () => {
+    if (!auth.currentUser) {
+      toast.warning('Please log in to book a room');
+      navigate('/login', { state: { from: '/roombooking' } });
+      return;
+    }
     if (!selectedRoomDetails) {
       toast.error('No room selected for booking');
       return;
@@ -676,9 +688,8 @@ const RoomBooking = () => {
                     <motion.span
                       key={index}
                       whileHover={{ scale: 1.05 }}
-                      className={`px-3 py-1 rounded-full text-sm font-medium ${
-                        index % 3 === 0 ? 'bg-indigo-100 text-indigo-800' : index % 3 === 1 ? 'bg-purple-100 text-purple-800' : 'bg-teal-100 text-teal-800'
-                      }`}
+                      className={`px-3 py-1 rounded-full text-sm font-medium ${index % 3 === 0 ? 'bg-indigo-100 text-indigo-800' : index % 3 === 1 ? 'bg-purple-100 text-purple-800' : 'bg-teal-100 text-teal-800'
+                        }`}
                     >
                       {facility}
                     </motion.span>

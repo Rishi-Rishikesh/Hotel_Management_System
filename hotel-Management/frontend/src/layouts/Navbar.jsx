@@ -48,9 +48,9 @@ const Navbar = () => {
   };
 
   const navLinks = [
-    { name: "Home", path: "/home", icon: Home },
+    { name: "Home", path: "/", icon: Home },
     { name: "About", path: "/about", icon: Info },
-    { name: "Rooms", path: "/roompage", icon: BedDouble },
+    { name: "Rooms", path: "/roombooking", icon: BedDouble },
     { name: "Dining", path: "/foodordering", icon: Coffee },
     { name: "Contact", path: "/contactus", icon: Mail },
   ];
@@ -68,8 +68,8 @@ const Navbar = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled
-          ? "bg-white/80 backdrop-blur-md shadow-lg py-2"
-          : "bg-transparent py-4 text-white"
+        ? "bg-white/80 backdrop-blur-md shadow-lg py-2"
+        : "bg-transparent py-4 text-white"
         }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -93,8 +93,8 @@ const Navbar = () => {
                   key={link.name}
                   to={link.path}
                   className={`flex items-center space-x-1 font-medium transition-all hover:text-blue-600 ${location.pathname === link.path
-                      ? "text-blue-600 border-b-2 border-blue-600"
-                      : isScrolled ? "text-gray-600" : "text-gray-700"
+                    ? "text-blue-600 border-b-2 border-blue-600"
+                    : isScrolled ? "text-gray-600" : "text-gray-700"
                     }`}
                 >
                   <link.icon size={16} />

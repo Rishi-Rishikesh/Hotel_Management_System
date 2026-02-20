@@ -61,15 +61,19 @@ function NavbarSelector() {
   const location = window.location.pathname;
 
   // Pages where navbar should NEVER show
-  const authPages = ["/", "/login", "/signup", "/forgotpassword", "/otp", "/newpassword"];
+  const authPages = ["/login", "/signup", "/forgotpassword", "/otp", "/newpassword"];
 
   // Don't show navbar on auth pages
   if (authPages.includes(location)) {
     return null;
   }
 
-  // Only show navbar if user is actually authenticated
+  // Show public navbar on home/about/contact/rooms if not authenticated
   if (!token || !role) {
+    const publicPages = ["/", "/home", "/about", "/contactus", "/roompage"];
+    if (publicPages.includes(location)) {
+      return <Navbar />;
+    }
     return null;
   }
 
@@ -95,7 +99,7 @@ function App() {
 
             <div className="">
               <Routes>
-                <Route path="/" element={<LandingPage />} />
+                <Route path="/" element={<Home />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route
                   path="/login"

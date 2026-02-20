@@ -61,28 +61,41 @@ function NavbarSelector() {
   const location = window.location.pathname;
 
   // Pages where navbar should NEVER show
-  const authPages = ["/login", "/signup", "/forgotpassword", "/otp", "/newpassword"];
+  const authPages = ["/login", "/signup", "/forgotpassword", "/otp", "/newpassword", "/guestregistration"];
 
-  // Don't show navbar on auth pages
   if (authPages.includes(location)) {
     return null;
   }
 
-  // Show public navbar on home/about/contact/rooms if not authenticated
-  if (!token || !role) {
-    const publicPages = ["/", "/home", "/about", "/contactus", "/roompage"];
-    if (publicPages.includes(location)) {
-      return <Navbar />;
-    }
-    return null;
+  // Dashboard/Management paths that should show AdminNavbar for privileged users
+  const adminPaths = [
+    "/admin-dashboard",
+    "/staff-dashboard",
+    "/rooms",
+    "/hall-management",
+    "/tasks",
+    "/guest-management",
+    "/staff-management",
+    "/bookings",
+    "/inventory",
+    "/schedule",
+    "/history",
+    "/adminorder",
+    "/adminchat"
+  ];
+
+  const isManagementPath = adminPaths.some(path => location.startsWith(path));
+
+  // Show AdminNavbar ONLY if user is Admin/Staff AND they are on a management path
+  if ((role === "Admin" || role === "Staff") && isManagementPath) {
+    return <AdminNavbar />;
   }
 
-  if (role === "Admin") {
-    return <AdminNavbar />;
-  } else if (role === "User" || role === "Staff") {
-    return <Navbar />;
-  }
-  return null;
+  // Default to the premium customer Navbar for everyone else:
+  // 1. Unauthenticated visitors
+  // 2. Logged in "User" role
+  // 3. Admin/Staff when they are browsing public pages (Home, Room Booking, etc.)
+  return <Navbar />;
 }
 
 function App() {

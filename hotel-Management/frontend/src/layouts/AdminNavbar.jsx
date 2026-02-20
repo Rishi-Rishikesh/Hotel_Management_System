@@ -3,12 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  Menu, 
-  X, 
-  LogOut, 
-  Home, 
-  Users, 
+import { useAuth } from "../AuthContext";
+import {
+  Menu,
+  X,
+  LogOut,
+  Home,
+  Users,
   Building,
   List,
   Calendar,
@@ -57,10 +58,12 @@ const AdminNavbar = () => {
     navigate("/login");
   };
 
+  const { role } = useAuth();
+
   const navItems = [
     { name: "Dashboard", path: "/admin-dashboard", icon: Home },
-    { 
-      name: "Quick Access", 
+    {
+      name: "Quick Access",
       icon: Users,
       subItems: [
         { name: "New Booking", path: "/bookings/new" },
@@ -83,7 +86,7 @@ const AdminNavbar = () => {
             className="fixed inset-y-0 left-0 z-50 w-60 bg-gradient-to-b from-blue-800 to-blue-600 text-white flex flex-col lg:w-64"
           >
             <div className="p-4 text-xl font-bold flex justify-between items-center">
-              Admin Panel
+              {role === "Staff" ? "Staff Portal" : "Admin Panel"}
               <button
                 className="p-2 rounded-md text-white hover:bg-blue-700 focus:outline-none transition-colors duration-200"
                 onClick={toggleSidebar}
@@ -141,7 +144,7 @@ const AdminNavbar = () => {
                 to="/admin-dashboard"
                 className="flex items-center space-x-2"
               >
-                <motion.div 
+                <motion.div
                   whileHover={{ rotate: 5 }}
                   className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-blue-400 flex items-center justify-center"
                 >

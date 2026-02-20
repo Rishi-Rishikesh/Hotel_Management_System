@@ -48,6 +48,7 @@ const Navbar = () => {
 
   const navLinks = [
     { name: "Home", path: "/", icon: Home },
+    { name: "Dashboard", path: "/dashboard", icon: User },
     { name: "About", path: "/about", icon: Info },
     { name: "Rooms", path: "/roombooking", icon: BedDouble },
     { name: "Dining", path: "/foodordering", icon: Coffee },
@@ -122,11 +123,11 @@ const Navbar = () => {
             {token ? (
               <div className="flex items-center space-x-6">
                 <Link
-                  to={getDashboardPath()}
+                  to="/dashboard"
                   className="flex items-center space-x-2 bg-gray-900 text-white px-7 py-3 rounded-2xl font-black text-sm uppercase tracking-wider shadow-2xl shadow-gray-200 hover:bg-blue-600 transition-all active:scale-95"
                 >
                   <User size={18} />
-                  <span>Dashboard</span>
+                  <span>Account</span>
                 </Link>
                 <button
                   onClick={handleLogout}

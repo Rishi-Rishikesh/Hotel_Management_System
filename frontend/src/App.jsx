@@ -54,6 +54,7 @@ import HallManagement from "./pages/HallManagement";
 import InventoryHistory from "./pages/InventoryHistory";
 import StaffManagement from "./pages/StaffManagement";
 import RoomReview from "./pages/RoomReview.jsx";
+import DashboardGate from "./components/DashboardGate";
 import AdminOrder from "./pages/AdminOrder.jsx";
 
 function NavbarSelector() {
@@ -122,6 +123,7 @@ function App() {
                 <Route path="/otp" element={<OTP />} />
                 <Route path="/newpassword" element={<NewPassword />} />
                 <Route path="/home" element={<Home />} />
+                <Route path="/dashboard" element={<DashboardGate />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contactus" element={<Contactus />} />
                 <Route path="/roompage" element={<RoomPage />} />

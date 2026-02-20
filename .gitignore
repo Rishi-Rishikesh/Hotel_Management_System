@@ -1,0 +1,10 @@
+[
+  ".agent/",
+  "node_modules/",
+  "*.log",
+  ".env",
+  ".env.local",
+  "dist/",
+  ".vscode/",
+  ".DS_Store"
+]

@@ -12,7 +12,6 @@ import {
   Wind,
   Waves
 } from "lucide-react";
-import Slider from "../components/Slider";
 import RoomsPreview from "../components/RoomsPreview";
 import ServiceSection from "../components/ServiceSection";
 import Gallery from "../components/Gallery";
@@ -43,90 +42,115 @@ const Home = () => {
   return (
     <div className="bg-white selection:bg-blue-100 selection:text-blue-900">
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center pt-24 pb-16 overflow-hidden">
-        {/* Background Decorative Blobs */}
-        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-[600px] h-[600px] bg-blue-50 rounded-full blur-3xl opacity-60 -z-10" />
-        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-[400px] h-[400px] bg-teal-50 rounded-full blur-3xl opacity-50 -z-10" />
+      <section className="relative min-h-[95vh] flex items-center overflow-hidden bg-[#fafafa]">
+        {/* Artistic Background Elements */}
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-[#f0f4f8] -skew-x-12 translate-x-1/4 -z-10" />
+        <motion.div
+          initial={{ opacity: 0, scale: 1.2 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 2, ease: "easeOut" }}
+          className="absolute top-20 left-10 w-64 h-64 bg-blue-100/30 rounded-full blur-[100px] -z-10"
+        />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full grid lg:grid-cols-2 gap-16 items-center">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full grid lg:grid-cols-12 gap-8 items-center py-24">
+          {/* Left Column - Content */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="flex flex-col space-y-8"
+            animate="visible"
+            className="lg:col-span-8 flex flex-col space-y-10 relative z-10"
           >
-            <motion.div variants={itemVariants} className="inline-flex items-center space-x-2 px-4 py-2 bg-blue-50 rounded-full text-blue-600 font-bold text-sm uppercase tracking-widest shadow-sm">
-              <Star size={16} className="fill-blue-600" />
-              <span>Elite Boutique Stay</span>
+            <motion.div variants={itemVariants} className="flex items-center space-x-4">
+              <div className="h-px w-12 bg-blue-600" />
+              <span className="text-sm font-black text-blue-600 uppercase tracking-[0.4em] mb-1">
+                The Pinnacle of Luxury
+              </span>
             </motion.div>
 
-            <motion.h1 variants={itemVariants} className="text-6xl md:text-8xl font-black text-gray-900 leading-[1.1] tracking-tighter">
-              Refined <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-500">Elegance</span> in Every Detail.
-            </motion.h1>
+            <div className="space-y-4">
+              <motion.h1
+                variants={itemVariants}
+                className="text-7xl md:text-9xl font-black text-gray-900 leading-[0.95] tracking-tighter"
+              >
+                Timeless<br />
+                <span className="italic font-serif font-light text-blue-600/90">Sophistication.</span>
+              </motion.h1>
+              <motion.div
+                variants={itemVariants}
+                className="h-2 w-32 bg-gradient-to-r from-blue-600 to-transparent rounded-full ml-1"
+              />
+            </div>
 
-            <motion.p variants={itemVariants} className="text-xl md:text-2xl text-gray-600 max-w-lg leading-relaxed font-medium">
-              Anuthama Villa offers a sanctuary of peace and world-class luxury, tailored for those who appreciate the finer things.
+            <motion.p
+              variants={itemVariants}
+              className="text-xl md:text-2xl text-gray-500 max-w-xl leading-relaxed font-light font-serif"
+            >
+              Experience the art of living well at Anuthama Villa. A curated sanctuary where every moment is crafted into a masterpiece of comfort and grace.
             </motion.p>
 
-            <motion.div variants={itemVariants} className="flex flex-wrap gap-4 pt-4">
+            <motion.div variants={itemVariants} className="flex flex-wrap gap-6 pt-4">
               <button
                 onClick={() => navigate("/roombooking")}
-                className="group px-8 py-5 bg-gray-900 text-white rounded-2xl font-bold flex items-center gap-3 hover:bg-blue-600 transition-all shadow-2xl shadow-gray-200 active:scale-95"
+                className="group relative px-10 py-6 bg-gray-900 text-white overflow-hidden rounded-full font-bold transition-all shadow-2xl hover:shadow-blue-200/50"
               >
-                Book Your Experience
-                <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform" />
+                <div className="absolute inset-0 bg-blue-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+                <span className="relative z-10 flex items-center gap-3">
+                  Reservation
+                  <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform" />
+                </span>
               </button>
               <button
                 onClick={() => navigate("/about")}
-                className="px-8 py-5 bg-white text-gray-900 border-2 border-gray-100 rounded-2xl font-bold hover:border-gray-900 transition-all active:scale-95 shadow-sm"
+                className="px-10 py-6 bg-transparent text-gray-900 border border-gray-200 rounded-full font-bold hover:bg-gray-50 transition-all hover:border-gray-900"
               >
-                Our Story
+                Explore Story
               </button>
             </motion.div>
 
-            <motion.div variants={itemVariants} className="grid grid-cols-3 gap-8 pt-10 border-t border-gray-100">
-              <div>
-                <span className="block text-3xl font-black text-gray-900">4.9/5</span>
-                <span className="text-sm font-bold text-gray-400 uppercase">Guest Rating</span>
+            {/* Micro Stats */}
+            <motion.div variants={itemVariants} className="flex items-center gap-12 pt-8 border-t border-gray-100 w-fit">
+              <div className="group">
+                <p className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-1 group-hover:text-blue-600 transition-colors">Rating</p>
+                <p className="text-2xl font-black text-gray-900">4.9/5.0</p>
               </div>
-              <div>
-                <span className="block text-3xl font-black text-gray-900">24/7</span>
-                <span className="text-sm font-bold text-gray-400 uppercase">Concierge</span>
-              </div>
-              <div>
-                <span className="block text-3xl font-black text-gray-900">100%</span>
-                <span className="text-sm font-bold text-gray-400 uppercase">Privacy</span>
+              <div className="w-px h-10 bg-gray-100" />
+              <div className="group">
+                <p className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-1 group-hover:text-blue-600 transition-colors">Service</p>
+                <p className="text-2xl font-black text-gray-900">24/7</p>
               </div>
             </motion.div>
           </motion.div>
 
+          {/* Right Column - Image Showcase */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, x: 50 }}
-            whileInView={{ opacity: 1, scale: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-            className="relative"
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-4 relative"
           >
-            <div className="absolute -inset-4 bg-gradient-to-br from-blue-100 to-teal-100 rounded-[3rem] -rotate-3 blur-sm -z-10" />
-            <div className="p-2 bg-white rounded-[2.5rem] shadow-2xl overflow-hidden ring-1 ring-gray-100">
-              <Slider />
+            <div className="relative aspect-[4/5] w-full rounded-[3rem] overflow-hidden shadow-default group bg-gray-100">
+              <img
+                src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&q=80&w=2070"
+                alt="Luxury Anuthama Villa"
+                className="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000"
+              />
+              {/* Image Overlay Gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-60" />
+
+              {/* Floating Element */}
+              <motion.div
+                animate={{ y: [0, -15, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute bottom-8 right-8 bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-3xl shadow-2xl text-white max-w-[200px]"
+              >
+                <p className="text-xs font-bold uppercase tracking-widest opacity-80 mb-2">Location</p>
+                <p className="text-sm font-black leading-tight">Coastal Serenity, Prime Destination</p>
+              </motion.div>
             </div>
 
-            {/* Float Badge */}
-            <motion.div
-              animate={{ y: [0, -20, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -bottom-8 -left-8 bg-white p-6 rounded-3xl shadow-2xl border border-gray-50 flex items-center gap-4 hidden md:flex"
-            >
-              <div className="w-12 h-12 bg-teal-100 text-teal-600 rounded-2xl flex items-center justify-center">
-                <ShieldCheck size={28} />
-              </div>
-              <div>
-                <p className="text-sm font-black text-gray-900 leading-none">Safe & Secure</p>
-                <p className="text-xs font-bold text-gray-400 mt-1">Verified Luxury</p>
-              </div>
-            </motion.div>
+            {/* Decorative Frames */}
+            <div className="absolute -top-6 -right-6 w-full h-full border-2 border-blue-600/20 rounded-[3rem] -z-10 translate-x-2 translate-y-2" />
+            <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl -z-10" />
           </motion.div>
         </div>
       </section>

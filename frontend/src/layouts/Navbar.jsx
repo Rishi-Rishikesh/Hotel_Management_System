@@ -72,13 +72,31 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-3 group">
-            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-500 flex items-center justify-center shadow-2xl group-hover:rotate-6 transition-all duration-300 ring-2 ring-blue-100 group-hover:ring-blue-200">
-              <Shield className="text-white" size={24} />
+            <div className="relative w-12 h-12 flex items-center justify-center">
+              <div className="absolute inset-0 bg-blue-600/10 rounded-full scale-110 group-hover:scale-125 transition-transform duration-500" />
+              <svg
+                viewBox="0 0 24 24"
+                className="w-8 h-8 text-blue-600 transition-all duration-500 group-hover:rotate-12"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+                <path d="M12 2v20" className="opacity-20" />
+                <path d="M2 12h20" className="opacity-20" />
+              </svg>
             </div>
-            <span className={`text-2xl font-black tracking-tight transition-colors duration-300 ${isScrolled ? "text-gray-900" : "text-gray-900"
-              }`}>
-              Anuthama<span className="text-blue-600 font-serif italic ml-1">Villa</span>
-            </span>
+            <div className="flex flex-col -space-y-1">
+              <span className={`text-xl font-black tracking-tight transition-colors duration-300 ${isScrolled ? "text-gray-900" : "text-gray-900"}`}>
+                ANUTHAMA
+              </span>
+              <span className="text-xs font-bold text-blue-600 tracking-[0.3em] uppercase opacity-80">
+                Boutique Villa
+              </span>
+            </div>
           </Link>
 
           <div className="hidden md:flex items-center space-x-10">
@@ -162,7 +180,12 @@ const Navbar = () => {
               className="fixed inset-y-0 right-0 w-full max-w-sm bg-white shadow-2xl z-[120] flex flex-col"
             >
               <div className="p-8 flex items-center justify-between border-b border-gray-50">
-                <span className="text-xl font-black tracking-tighter">Anuthama <span className="text-blue-600 italic">Villa</span></span>
+                <div className="flex flex-col -space-y-1">
+                  <span className="text-xl font-black tracking-tight">ANUTHAMA</span>
+                  <span className="text-[10px] font-bold text-blue-600 tracking-[0.3em] uppercase opacity-80">
+                    Boutique Villa
+                  </span>
+                </div>
                 <button
                   onClick={() => setMobileMenuOpen(false)}
                   className="p-3 rounded-2xl bg-gray-50 text-gray-400 hover:text-gray-900 transition-colors"

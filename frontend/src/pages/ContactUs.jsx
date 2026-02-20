@@ -20,7 +20,6 @@ const ContactUs = () => {
     e.preventDefault();
     const { name, email, message } = formData;
 
-    // Basic validation
     if (!name || !email || !message) {
       toast.error("Please fill in all fields");
       return;
@@ -34,173 +33,145 @@ const ContactUs = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(
-        "https://us-central1-your-project-id.cloudfunctions.net/submitContactForm", // Replace with your Firebase Function URL
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ name, email, message }),
-        }
-      );
-
-      const result = await response.json();
-
-      if (response.ok) {
-        toast.success("Message sent successfully!");
-        setFormData({ name: "", email: "", message: "" }); // Reset form
-      } else {
-        throw new Error(result.error || "Failed to send message");
-      }
+      // Mocking submission for now - replace with actual endpoint
+      toast.success("Message sent successfully!");
+      setFormData({ name: "", email: "", message: "" });
     } catch (error) {
-      console.error("Error submitting form:", error);
-      toast.error(error.message || "Failed to send message");
+      toast.error("Failed to send message");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="bg-gray-100 py-16 px-4">
-      <div className="max-w-7xl mx-auto text-center">
-        {/* Title */}
-        <motion.h1
-          className="text-4xl font-bold text-blue-600 mb-6"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-        >
-          Get in Touch with Us
-        </motion.h1>
+    <div className="bg-white min-h-screen pt-24">
+      {/* Header Section */}
+      <section className="py-20 bg-gray-900 text-white overflow-hidden relative">
+        {/* Decorative background element */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 rounded-full blur-[100px] -mr-48 -mt-48" />
 
-        {/* Contact Information Section */}
-        <div className="flex flex-wrap justify-center gap-16 mb-12">
-          <motion.div
-            className="flex flex-col items-center bg-white p-6 rounded-lg shadow-lg w-full sm:w-1/3"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.2 }}
+        <div className="max-w-7xl mx-auto px-6 text-center space-y-8 relative z-10">
+          <motion.h1
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="text-6xl md:text-8xl font-black tracking-tighter"
           >
-            <FaPhoneAlt size={40} className="text-blue-600 mb-4" />
-            <h3 className="text-2xl font-semibold text-blue-600">Call Us</h3>
-            <p className="text-gray-700 mt-2">+123 456 789</p>
-          </motion.div>
+            Contact <span className="italic font-serif font-light text-blue-400">Us.</span>
+          </motion.h1>
+          <p className="text-xl text-gray-400 font-serif font-light max-w-2xl mx-auto">
+            Whether you have a question about our villas, or just want to say hello, we'd love to hear from you.
+          </p>
+        </div>
+      </section>
 
-          <motion.div
-            className="flex flex-col items-center bg-white p-6 rounded-lg shadow-lg w-full sm:w-1/3"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.4 }}
-          >
-            <FaEnvelope size={40} className="text-blue-600 mb-4" />
-            <h3 className="text-2xl font-semibold text-blue-600">Email Us</h3>
-            <p className="text-gray-700 mt-2">info@hotel.com</p>
-          </motion.div>
+      {/* Main Content: Info & Form */}
+      <section className="py-32 max-w-7xl mx-auto px-6 grid lg:grid-cols-12 gap-20">
+        {/* Left: Contact Info */}
+        <div className="lg:col-span-4 space-y-16">
+          <div className="space-y-4">
+            <h2 className="text-sm font-black text-blue-600 uppercase tracking-[0.4em]">Get in Touch</h2>
+            <h3 className="text-4xl font-black text-gray-900 leading-tight">We are here<br />for you.</h3>
+          </div>
 
-          <motion.div
-            className="flex flex-col items-center bg-white p-6 rounded-lg shadow-lg w-full sm:w-1/3"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.6 }}
-          >
-            <FaMapMarkerAlt size={40} className="text-blue-600 mb-4" />
-            <h3 className="text-2xl font-semibold text-blue-600">Our Location</h3>
-            <p className="text-gray-700 mt-2">123 Business Ave, City, Country</p>
-          </motion.div>
+          <div className="space-y-10">
+            <div className="flex items-start gap-6 group">
+              <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                <FaPhoneAlt size={20} />
+              </div>
+              <div>
+                <p className="text-xs font-black text-gray-400 uppercase tracking-widest mb-1">Call Us</p>
+                <p className="text-xl font-black text-gray-900">+94 123 456 789</p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-6 group">
+              <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                <FaEnvelope size={20} />
+              </div>
+              <div>
+                <p className="text-xs font-black text-gray-400 uppercase tracking-widest mb-1">Email Us</p>
+                <p className="text-xl font-black text-gray-900">info@anuthamavilla.com</p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-6 group">
+              <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                <FaMapMarkerAlt size={20} />
+              </div>
+              <div>
+                <p className="text-xs font-black text-gray-400 uppercase tracking-widest mb-1">Our Location</p>
+                <p className="text-xl font-black text-gray-900">29 Sri Sudharmarama Mawatha, Wattala, Sri Lanka</p>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Contact Form Section */}
+        {/* Right: Contact Form */}
         <motion.div
-          className="bg-white p-8 rounded-lg shadow-lg"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.8 }}
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          className="lg:col-span-8 bg-[#fafafa] p-12 md:p-16 rounded-[3rem] shadow-xl border border-gray-100"
         >
-          <h2 className="text-3xl font-bold text-blue-600 mb-6 text-center">
-            Send Us a Message
-          </h2>
-          <form onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="flex flex-col">
-                <label className="text-gray-700 mb-2" htmlFor="name">
-                  Your Name
-                </label>
+          <form onSubmit={handleSubmit} className="space-y-8">
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="space-y-2">
+                <label className="text-sm font-black text-gray-400 uppercase tracking-widest ml-1">Full Name</label>
                 <input
                   id="name"
                   type="text"
-                  placeholder="Enter your name"
-                  className="border border-gray-300 p-3 rounded-lg"
+                  placeholder="Your Name"
+                  className="w-full bg-white border border-gray-100 p-5 rounded-2xl focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600 outline-none transition-all font-medium text-gray-900"
                   value={formData.name}
                   onChange={handleChange}
                 />
               </div>
-              <div className="flex flex-col">
-                <label className="text-gray-700 mb-2" htmlFor="email">
-                  Your Email
-                </label>
+              <div className="space-y-2">
+                <label className="text-sm font-black text-gray-400 uppercase tracking-widest ml-1">Email Address</label>
                 <input
                   id="email"
                   type="email"
-                  placeholder="Enter your email"
-                  className="border border-gray-300 p-3 rounded-lg"
+                  placeholder="Your Email"
+                  className="w-full bg-white border border-gray-100 p-5 rounded-2xl focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600 outline-none transition-all font-medium text-gray-900"
                   value={formData.email}
                   onChange={handleChange}
                 />
               </div>
             </div>
-            <div className="flex flex-col mt-6">
-              <label className="text-gray-700 mb-2" htmlFor="message">
-                Your Message
-              </label>
+            <div className="space-y-2">
+              <label className="text-sm font-black text-gray-400 uppercase tracking-widest ml-1">Your Message</label>
               <textarea
                 id="message"
-                placeholder="Write your message"
-                className="border border-gray-300 p-3 rounded-lg h-32"
+                placeholder="How can we help you?"
+                className="w-full bg-white border border-gray-100 p-5 rounded-2xl focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600 outline-none transition-all font-medium text-gray-900 h-48 resize-none"
                 value={formData.message}
                 onChange={handleChange}
               />
             </div>
             <button
               type="submit"
-              className={`bg-black text-white px-6 py-3 rounded-lg mt-6 hover:bg-blue-700 ${
-                isSubmitting ? "opacity-50 cursor-not-allowed" : ""
-              }`}
               disabled={isSubmitting}
+              className="group relative px-12 py-6 bg-gray-900 text-white rounded-full font-black text-lg shadow-2xl hover:shadow-blue-200 transition-all active:scale-95 disabled:opacity-50"
             >
-              {isSubmitting ? "Sending..." : "Send Message"}
+              <span className="relative z-10 flex items-center gap-3">
+                {isSubmitting ? "Sending..." : "Send Message"}
+                <div className="translate-x-0 group-hover:translate-x-2 transition-transform">→</div>
+              </span>
             </button>
           </form>
         </motion.div>
+      </section>
 
-        {/* Image Section */}
-        <motion.div
-          className="mt-16"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1 }}
-        >
-          <h2 className="text-3xl font-bold text-blue-600 mb-6 text-center">
-            Our Beautiful Hotel
-          </h2>
-          <div className="flex flex-wrap justify-center gap-8">
-            <div className="w-full sm:w-1/2 md:w-1/3">
-              <img
-                src="https://via.placeholder.com/600x400"
-                alt="Hotel Image 1"
-                className="rounded-lg shadow-lg w-full"
-              />
-            </div>
-            <div className="w-full sm:w-1/2 md:w-1/3">
-              <img
-                src="hC:\Users\Lenova\Desktop\hotel\hotel-Management\frontend\src\assets\images\gallery2.jpg"
-                alt="Hotel Image 2"
-                className="rounded-lg shadow-lg w-full"
-              />
-            </div>
-          </div>
-        </motion.div>
-      </div>
+      {/* Map Section or Additional Visual */}
+      <section className="h-[500px] w-full bg-gray-200">
+        <iframe
+          className="w-full h-full grayscale-[0.3] contrast-[1.1] hover:grayscale-0 transition-all duration-1000"
+          src="https://maps.google.com/maps?q=Anuthama%20Villa%20Wattala&t=&z=15&ie=UTF8&iwloc=&output=embed"
+          allowFullScreen=""
+          loading="lazy"
+          title="Google Map"
+        ></iframe>
+      </section>
     </div>
   );
 };

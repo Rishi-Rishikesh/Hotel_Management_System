@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import http from "http";
+import { Server as SocketIOServer } from "socket.io";
 import connectDB from "./src/config/db.js";
 import guestRoutes from "./src/routes/guestRoutes.js";
 import foodTypeRoutes from "./src/routes/foodTypeRoutes.js";
@@ -16,6 +18,7 @@ import feedbackRoutes from "./src/routes/feedbackRoutes.js";
 import userRoutes from "./src/routes/userRoutes.js";
 import hallRoutes from "./src/routes/hallRoutes.js";
 import configRoutes from "./src/routes/configRoutes.js";
+import chatRoutes from "./src/routes/chatRoutes.js";
 import firebaseAdmin from "./src/config/firebaseAdmin.js";
 import cookieParser from "cookie-parser";
 import cloudinary from "cloudinary";
@@ -31,6 +34,23 @@ import Room from "./src/models/Room.js";
 dotenv.config();
 
 const app = express();
+const server = http.createServer(app);
+const io = new SocketIOServer(server, {
+  cors: {
+    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true,
+  },
+});
+
+app.set("io", io);
+
+io.on("connection", (socket) => {
+  console.log("Socket connected:", socket.id);
+  socket.on("disconnect", () => {
+    console.log("Socket disconnected:", socket.id);
+  });
+});
 
 // Configure Cloudinary
 cloudinary.v2.config({
@@ -139,6 +159,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/feedback", feedbackRoutes);
 app.use("/api/halls", hallRoutes);
 app.use("/api/config", configRoutes);
+app.use("/api/chats", chatRoutes);
 
 // Multer for file uploads
 const storage = multer.diskStorage({
@@ -161,7 +182,7 @@ app.post("/api/guests/upload", upload.single("profileImage"), (req, res) => {
 
 // Start server
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, async () => {
+server.listen(PORT, async () => {
   console.log(`Server running at http://localhost:${PORT}`);
   await seedDefaultRooms();
 });

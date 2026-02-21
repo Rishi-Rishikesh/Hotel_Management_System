@@ -8,7 +8,7 @@ export const getUserProfile = async (req, res) => {
       return res.status(401).json({ success: false, message: "User ID not found. Please authenticate" });
     }
 
-    const user = await Guest.findOne({ firebaseUid: req.userId }).select("email role status");
+    const user = await Guest.findOne({ firebaseUid: req.userId }).select("_id fname lname email role status");
     if (!user) {
       console.log(`getUserProfile: User not found for UID: ${req.userId}`);
       return res.status(404).json({ success: false, message: "User not found" });

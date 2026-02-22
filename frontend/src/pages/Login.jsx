@@ -64,8 +64,6 @@ const Login = ({ setUserRole }) => {
     setIsSubmitting(true);
 
     try {
-      console.log("Login attempt with email:", email);
-      console.log("Password provided:", password ? "[Password Hidden]" : "No password");
 
       // Sign in with retry logic for network issues
       let userCredential;
@@ -77,7 +75,6 @@ const Login = ({ setUserRole }) => {
           break;
         } catch (firebaseError) {
           if (firebaseError.code === 'auth/network-request-failed' && retries > 0) {
-            console.log(`Network error, retrying... (${retries} attempts left)`);
             retries--;
             await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds before retry
             continue;
@@ -87,7 +84,6 @@ const Login = ({ setUserRole }) => {
       }
 
       const idToken = await userCredential.user.getIdToken(true);
-      console.log("Firebase idToken obtained:", idToken);
       localStorage.setItem('token', idToken);
 
       const response = await axios.post(
@@ -99,7 +95,6 @@ const Login = ({ setUserRole }) => {
         }
       );
 
-      console.log("Server response:", response.data);
 
       if (response.data.success) {
         const { role, user } = response.data;

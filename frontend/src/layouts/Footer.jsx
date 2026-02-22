@@ -16,10 +16,17 @@ const Footer = () => {
             "Where every sunset tells a story, and every stay becomes a timeless memory."
           </p>
           <div className="flex gap-4">
-            {[FaFacebook, FaTwitter, FaInstagram, FaLinkedin].map((Icon, i) => (
+            {[
+              { Icon: FaFacebook, label: 'Facebook' },
+              { Icon: FaTwitter, label: 'Twitter' },
+              { Icon: FaInstagram, label: 'Instagram' },
+              { Icon: FaLinkedin, label: 'LinkedIn' }
+            ].map(({ Icon, label }, i) => (
               <a
                 key={i}
                 href="#"
+                title={label}
+                aria-label={label}
                 className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-blue-500 hover:bg-blue-500/10 transition-all duration-300"
               >
                 <Icon size={16} />

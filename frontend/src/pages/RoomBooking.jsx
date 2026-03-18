@@ -592,20 +592,21 @@ const RoomBooking = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4"
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4 lg:p-10"
           onClick={closeModal}
         >
           <motion.div
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 50, opacity: 0 }}
-            className="bg-white rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto relative p-8 shadow-2xl"
+            initial={{ y: 50, opacity: 0, scale: 0.95 }}
+            animate={{ y: 0, opacity: 1, scale: 1 }}
+            exit={{ y: 50, opacity: 0, scale: 0.95 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            className="bg-slate-900/95 border border-white/10 rounded-3xl w-full max-w-5xl max-h-[90vh] overflow-y-auto relative p-8 md:p-12 shadow-[0_0_50px_rgba(0,0,0,0.5)]"
             onClick={(e) => e.stopPropagation()}
           >
             <motion.button
               whileHover={{ scale: 1.1, rotate: 90 }}
               whileTap={{ scale: 0.9 }}
-              className="absolute top-4 right-4 p-2 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white hover:from-pink-600 hover:to-rose-600 transition-all duration-300 shadow-md"
+              className="absolute top-6 right-6 p-2.5 rounded-full bg-slate-800 border border-white/10 text-gray-300 hover:text-white hover:bg-rose-500 hover:border-rose-400 transition-all duration-300 shadow-xl z-50"
               onClick={closeModal}
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -613,32 +614,33 @@ const RoomBooking = () => {
               </svg>
             </motion.button>
 
-            <div className="space-y-6">
+            <div className="space-y-10">
               <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
                 className="text-center"
               >
-                <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-teal-500">
-                  Room {selectedRoomDetails.number}
+                <h2 className="text-4xl font-light text-gray-200 tracking-wide mb-2">
+                  Suite <span className="font-semibold text-amber-400">{selectedRoomDetails.number}</span>
                 </h2>
-                <div className="mt-2 h-1 bg-gradient-to-r from-indigo-200 to-teal-200 rounded-full w-1/4 mx-auto" />
+                <div className="mt-4 h-0.5 bg-gradient-to-r from-transparent via-amber-500/50 to-transparent w-1/3 mx-auto" />
               </motion.div>
 
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="relative overflow-hidden rounded-xl shadow-2xl"
+                className="relative overflow-hidden rounded-2xl shadow-2xl ring-1 ring-white/10 group"
               >
                 <img
                   src={selectedRoomDetails.imageUrl}
                   alt={`Room ${selectedRoomDetails.number}`}
-                  className="w-full h-80 object-cover transform hover:scale-105 transition-transform duration-500"
+                  className="w-full h-96 object-cover transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-                  <span className="text-white font-bold text-xl">{selectedRoomDetails.price}</span>
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-950 via-slate-900/80 to-transparent p-6">
+                  <span className="text-amber-400 font-bold text-3xl tracking-wider">{selectedRoomDetails.price}</span>
+                  <span className="text-gray-400 text-sm ml-2 tracking-wide uppercase">/ Night</span>
                 </div>
               </motion.div>
 
@@ -646,32 +648,32 @@ const RoomBooking = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="space-y-4"
+                className="space-y-8"
               >
-                <p className="text-gray-600 text-lg">{selectedRoomDetails.description}</p>
+                <p className="text-gray-300 text-lg leading-relaxed font-light">{selectedRoomDetails.description}</p>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="flex items-center p-3 bg-indigo-50 rounded-lg">
-                    <div className="p-2 bg-indigo-100 rounded-full mr-3">
-                      <svg className="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex items-center p-5 bg-slate-800/50 border border-white/5 rounded-2xl">
+                    <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl mr-4">
+                      <svg className="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                       </svg>
                     </div>
                     <div>
-                      <p className="text-sm text-gray-500">Capacity</p>
-                      <p className="font-semibold text-gray-800">{selectedRoomDetails.capacity} people</p>
+                      <p className="text-xs text-gray-500 uppercase tracking-widest mb-1">Max Occupancy</p>
+                      <p className="font-medium text-gray-200 text-lg">{selectedRoomDetails.capacity} Guests</p>
                     </div>
                   </div>
 
-                  <div className="flex items-center p-3 bg-teal-50 rounded-lg">
-                    <div className="p-2 bg-teal-100 rounded-full mr-3">
-                      <svg className="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <div className="flex items-center p-5 bg-slate-800/50 border border-white/5 rounded-2xl">
+                    <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl mr-4">
+                      <svg className="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                     </div>
                     <div>
-                      <p className="text-sm text-gray-500">Price</p>
-                      <p className="font-semibold text-gray-800">{selectedRoomDetails.price}</p>
+                      <p className="text-xs text-gray-500 uppercase tracking-widest mb-1">Base Rate</p>
+                      <p className="font-medium text-gray-200 text-lg">{selectedRoomDetails.price}</p>
                     </div>
                   </div>
                 </div>
@@ -682,14 +684,13 @@ const RoomBooking = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
               >
-                <h3 className="text-xl font-semibold text-gray-800 mb-4">Popular Facilities</h3>
-                <div className="flex flex-wrap gap-2">
+                <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-4 border-b border-white/10 pb-2">Included Amenities</h3>
+                <div className="flex flex-wrap gap-3">
                   {selectedRoomDetails.facilities.map((facility, index) => (
                     <motion.span
                       key={index}
                       whileHover={{ scale: 1.05 }}
-                      className={`px-3 py-1 rounded-full text-sm font-medium ${index % 3 === 0 ? 'bg-indigo-100 text-indigo-800' : index % 3 === 1 ? 'bg-purple-100 text-purple-800' : 'bg-teal-100 text-teal-800'
-                        }`}
+                      className="px-4 py-2 rounded-lg bg-slate-800/80 border border-white/10 text-gray-300 text-sm font-medium tracking-wide shadow-sm"
                     >
                       {facility}
                     </motion.span>
@@ -700,35 +701,25 @@ const RoomBooking = () => {
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                animate={{
-                  boxShadow: [
-                    '0 4px 14px 0 rgba(79, 70, 229, 0.3)',
-                    '0 4px 14px 0 rgba(79, 70, 229, 0.4)',
-                    '0 4px 14px 0 rgba(79, 70, 229, 0.3)',
-                  ],
-                }}
-                transition={{ scale: { duration: 0.2 }, boxShadow: { repeat: Infinity, duration: 2 } }}
-                className="w-full py-3 bg-gradient-to-r from-indigo-600 to-teal-500 text-white rounded-lg hover:opacity-90 transition-opacity shadow-lg"
+                className="w-full mt-6 py-4 bg-amber-500/10 text-amber-400 font-medium tracking-wide border border-amber-500/30 rounded-2xl hover:bg-amber-500 hover:text-slate-900 transition-colors duration-300 shadow-lg text-lg flex justify-center items-center"
                 onClick={handleBookNow}
               >
-                <span className="flex items-center justify-center">
-                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  Book Now
-                </span>
+                <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Reserve This Suite
               </motion.button>
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.6 }}
-                className="border-t border-gray-200 pt-8 mt-8"
+                className="border-t border-white/10 pt-10 mt-10"
               >
-                <h3 className="text-xl font-semibold text-gray-800 mb-6">Customer Reviews</h3>
+                <h3 className="text-2xl font-light text-gray-200 mb-8 tracking-wide">Guest Experiences</h3>
                 {isLoading ? (
-                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-center items-center py-10">
-                    <svg className="animate-spin h-10 w-10 text-indigo-500" viewBox="0 0 24 24">
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-center items-center py-12">
+                    <svg className="animate-spin h-10 w-10 text-amber-500 text-opacity-50" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8h8a8 8 0 01-16 0z" />
                     </svg>
@@ -741,30 +732,30 @@ const RoomBooking = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.1 * index }}
-                        className="bg-white p-4 rounded-xl shadow-sm border border-gray-100"
+                        className="bg-slate-800/40 p-6 rounded-2xl border border-white/5 hover:border-amber-500/20 transition-colors"
                       >
                         <div className="flex items-start">
-                          <div className="flex-shrink-0 mr-4">
-                            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-400 to-blue-500 flex items-center justify-center text-white font-bold">
+                          <div className="flex-shrink-0 mr-5">
+                            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-slate-900 font-bold text-lg shadow-md">
                               {review.userName.charAt(0).toUpperCase()}
                             </div>
                           </div>
                           <div className="flex-1 min-w-0">
-                            <div className="flex justify-between items-start mb-1">
-                              <p className="font-semibold text-gray-800">{review.userName}</p>
-                              <div className="flex items-center">
+                            <div className="flex justify-between items-start mb-2">
+                              <p className="font-semibold text-gray-100 text-lg tracking-wide">{review.userName}</p>
+                              <div className="flex items-center bg-slate-900/50 px-3 py-1 rounded-full border border-white/5">
                                 {[...Array(5)].map((_, i) => (
                                   <span
                                     key={i}
-                                    className={`text-lg ${i < review.rating ? 'text-yellow-400' : 'text-gray-300'}`}
+                                    className={`text-md ${i < review.rating ? 'text-amber-400' : 'text-slate-600'}`}
                                   >
                                     ★
                                   </span>
                                 ))}
                               </div>
                             </div>
-                            <p className="text-gray-600 mb-2">{review.comment}</p>
-                            <div className="text-xs text-gray-400">
+                            <p className="text-gray-300 mb-3 leading-relaxed">{review.comment}</p>
+                            <div className="text-xs text-gray-500 font-medium tracking-wider uppercase">
                               {new Date(review.createdAt).toLocaleDateString('en-US', {
                                 year: 'numeric',
                                 month: 'long',
@@ -772,12 +763,12 @@ const RoomBooking = () => {
                               })}
                             </div>
                             {review.userId === currentUserId && (
-                              <div className="mt-2 flex gap-2">
+                              <div className="mt-4 flex gap-3">
                                 <motion.button
                                   whileHover={{ scale: 1.05 }}
                                   whileTap={{ scale: 0.95 }}
                                   onClick={() => handleEditReview(review)}
-                                  className="bg-blue-600 text-white px-3 py-1 rounded-lg text-sm"
+                                  className="text-amber-400 border border-amber-400/30 hover:bg-amber-400/10 px-4 py-1.5 rounded-full text-sm font-medium transition-colors"
                                 >
                                   Edit
                                 </motion.button>
@@ -785,7 +776,7 @@ const RoomBooking = () => {
                                   whileHover={{ scale: 1.05 }}
                                   whileTap={{ scale: 0.95 }}
                                   onClick={() => handleDeleteReview(review._id)}
-                                  className="bg-red-600 text-white px-3 py-1 rounded-lg text-sm"
+                                  className="text-rose-400 border border-rose-400/30 hover:bg-rose-400/10 px-4 py-1.5 rounded-full text-sm font-medium transition-colors"
                                 >
                                   Delete
                                 </motion.button>
@@ -797,14 +788,14 @@ const RoomBooking = () => {
                     ))}
                   </div>
                 ) : (
-                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-8">
-                    <div className="inline-block p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-full mb-4">
-                      <svg className="w-10 h-10 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-12 border border-white/5 bg-slate-800/20 rounded-2xl">
+                    <div className="inline-block p-4 bg-slate-800 rounded-full mb-4 border border-white/10">
+                      <svg className="w-10 h-10 text-amber-500/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                       </svg>
                     </div>
-                    <h4 className="text-lg font-medium text-gray-700 mb-1">No reviews yet</h4>
-                    <p className="text-gray-500">Be the first to share your experience!</p>
+                    <h4 className="text-lg font-light text-gray-300 mb-2 tracking-wide">No Reviews Yet</h4>
+                    <p className="text-gray-500 text-sm">Be the first to share your experience staying in this suite.</p>
                   </motion.div>
                 )}
               </motion.div>

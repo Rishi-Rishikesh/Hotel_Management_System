@@ -261,36 +261,39 @@ const RoomBookingForm = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
-      className="min-h-screen bg-gray-50"
-      style={{
-        backgroundImage: `url(${background})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundermek: "no-repeat",
-      }}
+      className="min-h-screen relative p-6 md:p-12 overflow-y-auto font-sans bg-slate-950"
     >
+      <div 
+        className="fixed inset-0 z-0 opacity-40 bg-cover bg-center"
+        style={{ backgroundImage: `url(${background})` }}
+      />
+      <div className="fixed inset-0 z-0 bg-gradient-to-b from-slate-950/80 via-slate-900/60 to-slate-950/90 backdrop-blur-[2px]" />
+
       <ToastContainer />
-      <div className="container mx-auto p-6">
+      <div className="max-w-4xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-white/90 backdrop-blur-md border border-gray-200 shadow-xl rounded-xl p-6"
+          className="bg-slate-900/70 backdrop-blur-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)] rounded-3xl p-8 md:p-10"
         >
           <motion.div
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6 }}
-            className="flex justify-between items-center mb-6"
+            className="flex flex-col sm:flex-row justify-between items-center mb-10 gap-4"
           >
-            <h1 className="text-2xl font-bold text-gray-900">Room Booking</h1>
+            <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-100 to-amber-300">
+              Complete Reservation
+            </h1>
             <motion.button
-              whileHover={{ scale: 1.05, boxShadow: "0 4px 15px rgba(59, 130, 246, 0.3)" }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.02, boxShadow: "0 0 20px rgba(59, 130, 246, 0.2)" }}
+              whileTap={{ scale: 0.98 }}
               onClick={handleViewHistory}
-              className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+              className="px-6 py-2.5 rounded-full text-blue-300 font-medium tracking-wide border border-blue-500/30 bg-blue-500/10 hover:bg-blue-500/20 transition-all duration-300 flex items-center shadow-lg"
             >
-              Booking History
+              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              View History
             </motion.button>
           </motion.div>
 
@@ -299,22 +302,19 @@ const RoomBookingForm = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="bg-blue-50/80 backdrop-blur-sm p-4 rounded-lg mb-6"
+              className="bg-slate-800/50 border border-white/5 backdrop-blur-md p-6 rounded-2xl mb-10 shadow-inner flex flex-col md:flex-row items-center gap-6"
             >
-              <h2 className="text-xl font-semibold mb-3 text-blue-900">Selected Room Details</h2>
-              <div className="space-y-2">
-                <p>
-                  <span className="font-medium">Room Number:</span> {selectedRoomDetails.number}
-                </p>
-                <p>
-                  <span className="font-medium">Price:</span> {selectedRoomDetails.price}
-                </p>
-                <p>
-                  <span className="font-medium">Capacity:</span> {selectedRoomDetails.capacity} person(s)
-                </p>
-                <p>
-                  <span className="font-medium">Rating:</span> ★ {selectedRoomDetails.rating}
-                </p>
+              <div className="w-full md:w-1/3 h-32 rounded-xl overflow-hidden shadow-lg border border-white/10">
+                <img src={selectedRoomDetails.imageUrl} alt="Room" className="w-full h-full object-cover" />
+              </div>
+              <div className="w-full md:w-2/3 flex flex-col justify-center">
+                <h2 className="text-xl font-light tracking-wide mb-3 text-amber-400">Selected Suite Details</h2>
+                <div className="grid grid-cols-2 gap-4 text-sm text-gray-300">
+                  <p><span className="text-gray-500 uppercase tracking-wider text-xs block mb-1">Suite</span> <span className="font-semibold text-gray-100 text-lg">{selectedRoomDetails.number}</span></p>
+                  <p><span className="text-gray-500 uppercase tracking-wider text-xs block mb-1">Rate</span> <span className="font-semibold text-gray-100 text-lg">{selectedRoomDetails.price}</span></p>
+                  <p><span className="text-gray-500 uppercase tracking-wider text-xs block mb-1">Max Guests</span> <span className="font-semibold text-gray-100">{selectedRoomDetails.capacity}</span></p>
+                  <p><span className="text-gray-500 uppercase tracking-wider text-xs block mb-1">Rating</span> <span className="font-semibold text-amber-400">★ {selectedRoomDetails.rating}</span></p>
+                </div>
               </div>
             </motion.div>
           )}
@@ -324,183 +324,187 @@ const RoomBookingForm = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
             onSubmit={handleSubmit}
-            className="bg-white/95 backdrop-blur-sm border border-gray-200 shadow-lg rounded-xl p-6"
+            className="bg-slate-900/60 backdrop-blur-xl border border-white/10 shadow-2xl rounded-3xl p-8 md:p-10"
           >
-            <h2 className="text-xl font-semibold mb-4 text-gray-900">Booking Details</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-              <div>
-                <label className="block mb-1 font-medium text-gray-700">Check-in Date</label>
-                <motion.input
-                  whileFocus={{ scale: 1.02 }}
-                  type="date"
-                  name="checkInDate"
-                  value={formData.checkInDate}
-                  onChange={handleInputChange}
-                  className="w-full p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                />
+            <h2 className="text-2xl font-light tracking-wide mb-6 text-gray-200 border-b border-white/10 pb-3">Booking Information</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              <div className="relative group">
+                <label className="block mb-2 text-xs font-semibold text-amber-500/80 uppercase tracking-wider">Check-in Date</label>
+                <div className="relative">
+                  <motion.input
+                    whileFocus={{ scale: 1.01 }}
+                    type="date"
+                    name="checkInDate"
+                    value={formData.checkInDate}
+                    onChange={handleInputChange}
+                    className="w-full p-4 bg-slate-800/50 border border-white/10 rounded-xl focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 transition-all text-gray-200 shadow-inner [color-scheme:dark]"
+                  />
+                </div>
               </div>
-              <div>
-                <label className="block mb-1 font-medium text-gray-700">Check-out Date</label>
-                <motion.input
-                  whileFocus={{ scale: 1.02 }}
-                  type="date"
-                  name="checkOutDate"
-                  value={formData.checkOutDate}
-                  onChange={handleInputChange}
-                  className="w-full p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                />
+              <div className="relative group">
+                <label className="block mb-2 text-xs font-semibold text-amber-500/80 uppercase tracking-wider">Check-out Date</label>
+                <div className="relative">
+                  <motion.input
+                    whileFocus={{ scale: 1.01 }}
+                    type="date"
+                    name="checkOutDate"
+                    value={formData.checkOutDate}
+                    onChange={handleInputChange}
+                    className="w-full p-4 bg-slate-800/50 border border-white/10 rounded-xl focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 transition-all text-gray-200 shadow-inner [color-scheme:dark]"
+                  />
+                </div>
               </div>
-              <div>
-                <label className="block mb-1 font-medium text-gray-700">Room Number</label>
+              <div className="relative group">
+                <label className="block mb-2 text-xs font-semibold text-amber-500/80 uppercase tracking-wider">Suite Number</label>
                 <motion.input
-                  whileFocus={{ scale: 1.02 }}
+                  whileFocus={{ scale: 1.01 }}
                   type="text"
                   name="roomNumber"
                   value={formData.roomNumber}
                   readOnly
-                  className="w-full p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  className="w-full p-4 bg-slate-900/50 border border-white/5 rounded-xl text-gray-400 shadow-inner cursor-not-allowed"
                 />
               </div>
-              <div>
-                <label className="block mb-1 font-medium text-gray-700">Kitchen Access</label>
+              <div className="relative group">
+                <label className="block mb-2 text-xs font-semibold text-amber-500/80 uppercase tracking-wider">Kitchen Access</label>
                 <motion.select
-                  whileFocus={{ scale: 1.02 }}
+                  whileFocus={{ scale: 1.01 }}
                   name="kitchenAccess"
                   value={formData.kitchenAccess}
                   onChange={handleInputChange}
-                  className="w-full p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  className="w-full p-4 bg-slate-800/50 border border-white/10 rounded-xl focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 transition-all text-gray-200 shadow-inner appearance-none custom-select"
                 >
-                  <option value="">Select</option>
-                  <option value="yes">Yes</option>
-                  <option value="no">No</option>
+                  <option value="" className="bg-slate-800 text-gray-400">Select option...</option>
+                  <option value="yes" className="bg-slate-800 text-gray-200">Yes, required</option>
+                  <option value="no" className="bg-slate-800 text-gray-200">No, not needed</option>
                 </motion.select>
               </div>
-              <div>
-                <label className="block mb-1 font-medium text-gray-700">Payment Method</label>
+              <div className="relative group md:col-span-2">
+                <label className="block mb-2 text-xs font-semibold text-amber-500/80 uppercase tracking-wider">Payment Method</label>
                 <motion.select
-                  whileFocus={{ scale: 1.02 }}
+                  whileFocus={{ scale: 1.01 }}
                   name="paymentMethod"
                   value={formData.paymentMethod}
                   onChange={handleInputChange}
-                  className="w-full p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  className="w-full p-4 bg-slate-800/50 border border-white/10 rounded-xl focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 transition-all text-gray-200 shadow-inner appearance-none custom-select"
                 >
-                  <option value="">Select</option>
-                  <option value="credit_card">Credit Card</option>
-                  <option value="debit_card">Debit Card</option>
-                  <option value="cash">Cash</option>
+                  <option value="" className="bg-slate-800 text-gray-400">Select payment method...</option>
+                  <option value="credit_card" className="bg-slate-800 text-gray-200">Credit Card</option>
+                  <option value="debit_card" className="bg-slate-800 text-gray-200">Debit Card</option>
+                  <option value="cash" className="bg-slate-800 text-gray-200">Cash (Pay at check-in)</option>
                 </motion.select>
               </div>
             </div>
 
-            <h2 className="text-xl font-semibold mb-4 text-gray-900">Guest Details</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-              <div>
-                <label className="block mb-1 font-medium text-gray-700">Male Guests</label>
+            <h2 className="text-2xl font-light tracking-wide mb-6 mt-10 text-gray-200 border-b border-white/10 pb-3">Guest Preferences</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+              <div className="relative group">
+                <label className="block mb-2 text-xs font-semibold text-amber-500/80 uppercase tracking-wider">Male Guests</label>
                 <motion.input
-                  whileFocus={{ scale: 1.02 }}
+                  whileFocus={{ scale: 1.01 }}
                   type="number"
                   name="maleGuests"
                   value={formData.maleGuests}
                   onChange={handleInputChange}
                   min="0"
-                  className="w-full p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  className="w-full p-4 bg-slate-800/50 border border-white/10 rounded-xl focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 transition-all text-gray-200 shadow-inner"
                 />
               </div>
-              <div>
-                <label className="block mb-1 font-medium text-gray-700">Female Guests</label>
+              <div className="relative group">
+                <label className="block mb-2 text-xs font-semibold text-amber-500/80 uppercase tracking-wider">Female Guests</label>
                 <motion.input
-                  whileFocus={{ scale: 1.02 }}
+                  whileFocus={{ scale: 1.01 }}
                   type="number"
                   name="femaleGuests"
                   value={formData.femaleGuests}
                   onChange={handleInputChange}
                   min="0"
-                  className="w-full p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  className="w-full p-4 bg-slate-800/50 border border-white/10 rounded-xl focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 transition-all text-gray-200 shadow-inner"
                 />
               </div>
-              <div>
-                <label className="block mb-1 font-medium text-gray-700">Child Guests</label>
+              <div className="relative group">
+                <label className="block mb-2 text-xs font-semibold text-amber-500/80 uppercase tracking-wider">Child Guests</label>
                 <motion.input
-                  whileFocus={{ scale: 1.02 }}
+                  whileFocus={{ scale: 1.01 }}
                   type="number"
                   name="childGuests"
                   value={formData.childGuests}
                   onChange={handleInputChange}
                   min="0"
-                  className="w-full p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  className="w-full p-4 bg-slate-800/50 border border-white/10 rounded-xl focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 transition-all text-gray-200 shadow-inner"
                 />
               </div>
             </div>
 
-            <div className="mb-6">
-              <label className="block mb-1 font-medium text-gray-700">Reason for Stay</label>
+            <div className="mb-8">
+              <label className="block mb-2 text-xs font-semibold text-amber-500/80 uppercase tracking-wider">Reason for Stay</label>
               <motion.textarea
-                whileFocus={{ scale: 1.02 }}
+                whileFocus={{ scale: 1.01 }}
                 name="stayReason"
                 value={formData.stayReason}
                 onChange={handleInputChange}
-                placeholder="Enter details"
-                className="w-full p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors h-32"
+                placeholder="Share any special requests or occasion details..."
+                className="w-full p-4 bg-slate-800/50 border border-white/10 rounded-xl focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 transition-all text-gray-200 shadow-inner h-32 placeholder-gray-500"
               />
             </div>
 
-            <div className="mb-6">
-              <h3 className="text-lg font-semibold mb-3 text-gray-900">Amenities</h3>
+            <div className="mb-10">
+              <h3 className="text-xs font-semibold text-amber-500/80 uppercase tracking-wider mb-4 border-b border-white/10 pb-2">Requested Amenities</h3>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <label className="flex items-center space-x-2">
+                <label className="flex items-center space-x-3 bg-slate-800/30 p-4 rounded-xl border border-white/5 cursor-pointer hover:bg-slate-800/50 transition">
                   <motion.input
                     whileHover={{ scale: 1.1 }}
                     type="checkbox"
                     name="airConditioning"
                     checked={formData.amenities.airConditioning}
                     onChange={handleInputChange}
-                    className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                    className="h-5 w-5 bg-slate-900 border border-white/20 rounded focus:ring-amber-500 text-amber-500 accent-amber-500 cursor-pointer"
                   />
-                  <span className="text-gray-700">Air Conditioning</span>
+                  <span className="text-gray-300 font-medium">Air Conditioning</span>
                 </label>
-                <label className="flex items-center space-x-2">
+                <label className="flex items-center space-x-3 bg-slate-800/30 p-4 rounded-xl border border-white/5 cursor-pointer hover:bg-slate-800/50 transition">
                   <motion.input
                     whileHover={{ scale: 1.1 }}
                     type="checkbox"
                     name="food"
                     checked={formData.amenities.food}
                     onChange={handleInputChange}
-                    className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                    className="h-5 w-5 bg-slate-900 border border-white/20 rounded focus:ring-amber-500 text-amber-500 accent-amber-500 cursor-pointer"
                   />
-                  <span className="text-gray-700">Food</span>
+                  <span className="text-gray-300 font-medium">Food Services</span>
                 </label>
-                <label className="flex items-center space-x-2">
+                <label className="flex items-center space-x-3 bg-slate-800/30 p-4 rounded-xl border border-white/5 cursor-pointer hover:bg-slate-800/50 transition">
                   <motion.input
                     whileHover={{ scale: 1.1 }}
                     type="checkbox"
                     name="parking"
                     checked={formData.amenities.parking}
                     onChange={handleInputChange}
-                    className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                    className="h-5 w-5 bg-slate-900 border border-white/20 rounded focus:ring-amber-500 text-amber-500 accent-amber-500 cursor-pointer"
                   />
-                  <span className="text-gray-700">Parking</span>
+                  <span className="text-gray-300 font-medium">Valet Parking</span>
                 </label>
               </div>
             </div>
 
-            <div className="flex justify-end space-x-3">
+            <div className="flex flex-col sm:flex-row justify-end gap-4 border-t border-white/10 pt-8 mt-8">
               <motion.button
-                whileHover={{ scale: 1.05, boxShadow: "0 4px 15px rgba(107, 114, 128, 0.3)" }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 type="button"
                 onClick={handleClear}
-                className="bg-gradient-to-r from-gray-200 to-gray-300 text-gray-800 px-4 py-2 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                className="px-8 py-3 rounded-xl text-gray-300 font-medium tracking-wide border border-white/10 bg-slate-800 hover:bg-slate-700 hover:text-white transition-all duration-300 shadow-md sm:w-auto w-full"
               >
-                Clear
+                Clear Form
               </motion.button>
               <motion.button
-                whileHover={{ scale: 1.05, boxShadow: "0 4px 15px rgba(59, 130, 246, 0.3)" }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 type="submit"
                 disabled={isSubmitting}
-                className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-4 py-2 rounded-lg shadow-md hover:shadow-lg transition-shadow disabled:bg-gray-400"
+                className="px-10 py-3 bg-amber-500/90 text-slate-900 font-bold tracking-wide rounded-xl hover:bg-amber-400 transition-colors duration-300 shadow-[0_0_20px_rgba(251,191,36,0.2)] disabled:bg-gray-600 disabled:text-gray-300 disabled:shadow-none sm:w-auto w-full"
               >
-                {isSubmitting ? "Booking..." : "Book Room"}
+                {isSubmitting ? "Processing..." : "Confirm Reservation"}
               </motion.button>
             </div>
           </motion.form>

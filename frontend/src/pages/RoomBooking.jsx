@@ -292,29 +292,31 @@ const RoomBooking = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
-      className="min-h-screen bg-repeat p-8 pb-12 overflow-y-auto font-sans"
-      style={{
-        backgroundImage: `url(${background})`,
-        backgroundSize: '300px 300px',
-      }}
+      className="min-h-screen relative p-8 pb-12 overflow-y-auto font-sans bg-slate-950"
     >
-      <div className="max-w-7xl mx-auto p-6">
+      <div 
+        className="fixed inset-0 z-0 opacity-40 bg-cover bg-center"
+        style={{ backgroundImage: `url(${background})` }}
+      />
+      <div className="fixed inset-0 z-0 bg-gradient-to-b from-slate-950/80 via-slate-900/60 to-slate-950/90 backdrop-blur-[2px]" />
+      
+      <div className="max-w-7xl mx-auto p-6 relative z-10">
         <motion.div
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6 }}
-          className="flex justify-between items-center mb-10"
+          className="flex flex-col sm:flex-row justify-between items-center mb-10 gap-4"
         >
-          <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-white">
-            Room Booking
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-100 to-amber-300 drop-shadow-sm">
+            Reserve Your Stay
           </h1>
           <Link to="/eventbooking">
             <motion.button
-              whileHover={{ scale: 1.05, boxShadow: '0 4px 15px rgba(79, 70, 229, 0.3)' }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-gradient-to-r from-indigo-600 to-teal-500 text-white px-6 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+              whileHover={{ scale: 1.02, boxShadow: '0 0 20px rgba(251, 191, 36, 0.3)' }}
+              whileTap={{ scale: 0.98 }}
+              className="px-8 py-3 rounded-full text-amber-100 font-medium tracking-wide border border-amber-500/30 bg-amber-500/10 backdrop-blur-md hover:bg-amber-500/20 transition-all duration-300 shadow-lg"
             >
-              View Hall Bookings
+              Explore Event Halls
             </motion.button>
           </Link>
         </motion.div>
@@ -323,19 +325,19 @@ const RoomBooking = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-white/30 backdrop-blur-lg border border-white/40 rounded-2xl p-8 shadow-xl"
+          className="bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-6 md:p-10 shadow-2xl ring-1 ring-white/5"
         >
-          <h2 className="text-3xl font-semibold text-gray-800 mb-8">
-            Choose Your <span className="text-indigo-500">Room</span>
+          <h2 className="text-2xl md:text-3xl font-light text-gray-200 mb-8 tracking-wide">
+            Select Your <span className="text-amber-400 font-semibold">Suite & Room</span>
           </h2>
 
-          <div className="bg-white/50 backdrop-blur-sm p-6 rounded-xl shadow-md mb-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-slate-800/40 p-6 md:p-8 rounded-2xl border border-white/5 shadow-inner mb-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="relative"
+                className="relative group"
               >
                 <input
                   type="date"
@@ -343,17 +345,17 @@ const RoomBooking = () => {
                   id="checkIn"
                   value={formData.checkIn}
                   onChange={handleInputChange}
-                  className="w-full p-4 pt-6 border border-indigo-100 rounded-lg bg-indigo-50/50 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all shadow-sm peer text-gray-800"
+                  className="w-full p-4 pt-6 bg-slate-900/50 border-b-2 border-slate-700/50 rounded-t-xl text-gray-100 placeholder-transparent focus:outline-none focus:border-amber-400 focus:bg-slate-900/80 transition-all peer [color-scheme:dark]"
                   required
                 />
                 <label
                   htmlFor="checkIn"
-                  className="absolute left-4 top-1 text-sm font-medium text-indigo-600 bg-indigo-50/50 px-1 transition-all duration-200 peer-focus:-top-2 peer-focus:text-indigo-700 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500"
+                  className="absolute left-4 top-1 text-xs font-semibold text-amber-500/80 uppercase tracking-wider transition-all duration-200 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-1 peer-focus:text-xs peer-focus:text-amber-400 pointer-events-none"
                 >
                   Check-in Date
                 </label>
                 {errors.checkIn && (
-                  <span className="text-red-500 text-sm mt-1 block">{errors.checkIn}</span>
+                  <span className="text-rose-400 text-sm mt-2 block pl-1">{errors.checkIn}</span>
                 )}
               </motion.div>
 
@@ -361,7 +363,7 @@ const RoomBooking = () => {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="relative"
+                className="relative group"
               >
                 <input
                   type="date"
@@ -369,17 +371,17 @@ const RoomBooking = () => {
                   id="checkOut"
                   value={formData.checkOut}
                   onChange={handleInputChange}
-                  className="w-full p-4 pt-6 border border-indigo-100 rounded-lg bg-indigo-50/50 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all shadow-sm peer text-gray-800"
+                  className="w-full p-4 pt-6 bg-slate-900/50 border-b-2 border-slate-700/50 rounded-t-xl text-gray-100 placeholder-transparent focus:outline-none focus:border-amber-400 focus:bg-slate-900/80 transition-all peer [color-scheme:dark]"
                   required
                 />
                 <label
                   htmlFor="checkOut"
-                  className="absolute left-4 top-1 text-sm font-medium text-indigo-600 bg-indigo-50/50 px-1 transition-all duration-200 peer-focus:-top-2 peer-focus:text-indigo-700 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500"
+                  className="absolute left-4 top-1 text-xs font-semibold text-amber-500/80 uppercase tracking-wider transition-all duration-200 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-1 peer-focus:text-xs peer-focus:text-amber-400 pointer-events-none"
                 >
                   Check-out Date
                 </label>
                 {errors.checkOut && (
-                  <span className="text-red-500 text-sm mt-1 block">{errors.checkOut}</span>
+                  <span className="text-rose-400 text-sm mt-2 block pl-1">{errors.checkOut}</span>
                 )}
               </motion.div>
             </div>
@@ -388,34 +390,34 @@ const RoomBooking = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="mt-6"
+              className="mt-8"
             >
-              <label className="block mb-2 text-sm font-medium text-indigo-600">
-                Number of Guests
+              <label className="block mb-4 text-xs font-semibold text-amber-500/80 uppercase tracking-wider pl-1">
+                Occupants
               </label>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-indigo-50/50 p-4 rounded-lg shadow-sm">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {['male', 'female', 'child'].map((type) => (
-                  <div key={type} className="flex flex-col items-center">
-                    <span className="text-sm font-medium text-gray-700 capitalize mb-2">{type}</span>
-                    <div className="flex items-center gap-2">
+                  <div key={type} className="flex flex-col items-center bg-slate-900/40 p-4 rounded-xl border border-white/5 hover:border-white/10 transition-colors">
+                    <span className="text-sm font-medium text-gray-400 uppercase tracking-wider mb-3">{type}</span>
+                    <div className="flex items-center gap-3">
                       <motion.button
-                        whileHover={{ scale: 1.1, backgroundColor: '#4f46e5' }}
+                        whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={() => handleGuestChange(type, 'decrease')}
-                        className="w-8 h-8 flex items-center justify-center bg-indigo-500 text-white rounded-full hover:bg-indigo-600 transition-all duration-200 shadow-md"
+                        className="w-8 h-8 flex items-center justify-center bg-slate-800 text-gray-300 rounded-full hover:bg-slate-700 hover:text-white border border-white/10 transition-all shadow-sm"
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 12H4" />
                         </svg>
                       </motion.button>
-                      <span className="w-12 text-center text-lg font-semibold text-indigo-700">
+                      <span className="w-8 text-center text-xl font-medium text-gray-100">
                         {formData[type]}
                       </span>
                       <motion.button
-                        whileHover={{ scale: 1.1, backgroundColor: '#4f46e5' }}
+                        whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={() => handleGuestChange(type, 'increase')}
-                        className="w-8 h-8 flex items-center justify-center bg-indigo-500 text-white rounded-full hover:bg-indigo-600 transition-all duration-200 shadow-md"
+                        className="w-8 h-8 flex items-center justify-center bg-amber-500/20 text-amber-400 rounded-full hover:bg-amber-500/40 hover:text-amber-300 border border-amber-500/30 transition-all shadow-sm"
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
@@ -426,7 +428,7 @@ const RoomBooking = () => {
                 ))}
               </div>
               {errors.guests && (
-                <span className="text-red-500 text-sm mt-1 block">{errors.guests}</span>
+                <span className="text-rose-400 text-sm mt-3 block pl-1">{errors.guests}</span>
               )}
             </motion.div>
           </div>
@@ -439,7 +441,7 @@ const RoomBooking = () => {
               </svg>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {availableRooms.length > 0 ? (
                 availableRooms.map((room, index) => (
                   <motion.div
@@ -447,48 +449,46 @@ const RoomBooking = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.1 * index }}
-                    whileHover={{
-                      scale: 1.03,
-                      boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
-                      borderColor: '#818cf8',
-                    }}
-                    className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border-2 border-transparent"
+                    whileHover={{ y: -5 }}
+                    className="group bg-slate-800/60 backdrop-blur-md rounded-3xl overflow-hidden border border-white/5 shadow-xl hover:border-amber-500/30 hover:shadow-[0_8px_30px_rgb(0,0,0,0.5)] transition-all duration-300 cursor-pointer flex flex-col"
                     onClick={() => handleRoomSelect(room)}
                   >
-                    <div className="relative overflow-hidden h-56">
+                    <div className="relative h-64 overflow-hidden">
+                      <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10" />
                       <img
                         src={room.imageUrl}
                         alt={`Room ${room.number}`}
-                        className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                        className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
                       />
-                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-                        <span className="text-white font-bold text-xl">Room {room.number}</span>
+                      <div className="absolute top-4 left-4 z-20">
+                        <span className="bg-black/60 backdrop-blur-md text-gray-200 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full border border-white/10">
+                          {room.capacity} Guests
+                        </span>
+                      </div>
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent p-5 z-20">
+                        <span className="text-white font-semibold text-2xl tracking-wide">Suite {room.number}</span>
                       </div>
                     </div>
-                    <div className="p-4">
-                      <div className="flex justify-between items-center mb-3">
-                        <span className="flex items-center">
-                          <span className="text-yellow-400 mr-1">★</span>
-                          <span className="font-semibold text-gray-800">{room.rating}</span>
+                    <div className="p-6 flex flex-col flex-grow">
+                      <div className="flex justify-between items-center mb-4">
+                        <span className="flex items-center text-gray-400">
+                          <span className="text-amber-400 mr-1 text-lg">★</span>
+                          <span className="font-medium text-gray-300">{room.rating}</span>
                         </span>
-                        <span className="bg-indigo-100 text-indigo-800 text-sm font-semibold px-2.5 py-0.5 rounded">
-                          {room.capacity} people
-                        </span>
+                        <span className="block text-amber-400 font-bold text-xl tracking-wide">{room.price}</span>
                       </div>
-                      <span className="block text-indigo-600 font-bold text-lg">{room.price}</span>
+                      <p className="text-sm text-gray-400 line-clamp-2 mb-6 flex-grow">{room.description}</p>
+                      
                       <motion.button
-                        whileHover={{
-                          scale: 1.05,
-                          background: 'linear-gradient(to right, #4f46e5, #06b6d4)',
-                        }}
-                        whileTap={{ scale: 0.95 }}
-                        className="mt-3 w-full py-2 bg-gradient-to-r from-indigo-500 to-teal-400 text-white rounded-lg transition-all duration-300 shadow-md"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="w-full py-3 bg-amber-500/10 text-amber-400 font-medium tracking-wide border border-amber-500/30 rounded-xl group-hover:bg-amber-500 group-hover:text-slate-900 transition-colors duration-300 shadow-inner"
                         onClick={(e) => {
                           e.stopPropagation();
                           handleRoomSelect(room);
                         }}
                       >
-                        View Details
+                        Reserve Suite
                       </motion.button>
                     </div>
                   </motion.div>
@@ -498,15 +498,15 @@ const RoomBooking = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.6 }}
-                  className="col-span-full text-center py-10"
+                  className="col-span-full text-center py-16 px-4"
                 >
-                  <div className="inline-block p-4 bg-gradient-to-r from-pink-100 to-purple-100 rounded-full mb-4">
-                    <svg className="w-10 h-10 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <div className="inline-block p-5 bg-slate-800/50 rounded-full mb-6 border border-white/5 ring-1 ring-amber-500/20">
+                    <svg className="w-12 h-12 text-amber-400/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-700 mb-2">No rooms available</h3>
-                  <p className="text-gray-500">Try adjusting your guest count or dates</p>
+                  <h3 className="text-2xl font-light text-gray-200 mb-3 tracking-wide">No Suites Available</h3>
+                  <p className="text-gray-400 font-medium">Please adjust your dates or guest count to find available luxury suites.</p>
                 </motion.div>
               )}
             </div>
@@ -517,9 +517,9 @@ const RoomBooking = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="mt-8 bg-white/50 backdrop-blur-sm p-6 rounded-xl shadow-md"
+              className="mt-10 bg-slate-900/40 backdrop-blur-xl p-8 rounded-3xl shadow-inner border border-white/5"
             >
-              <h3 className="text-2xl font-semibold text-gray-800 mb-4">Customer Reviews for Room {roomNumber}</h3>
+              <h3 className="text-2xl font-light text-gray-200 mb-6 tracking-wide">Customer Reviews for <span className="text-amber-400 font-semibold">Suite {roomNumber}</span></h3>
               <div className="space-y-6">
                 {reviews.map((review, index) => (
                   <motion.div
@@ -527,30 +527,30 @@ const RoomBooking = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.1 * index }}
-                    className="bg-white p-4 rounded-xl shadow-sm border border-gray-100"
+                    className="bg-slate-800/60 p-6 rounded-2xl shadow-lg border border-white/5 hover:border-amber-500/20 transition-colors"
                   >
                     <div className="flex items-start">
-                      <div className="flex-shrink-0 mr-4">
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-400 to-blue-500 flex items-center justify-center text-white font-bold">
+                      <div className="flex-shrink-0 mr-5">
+                        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-slate-900 font-bold text-lg shadow-md">
                           {review.userName.charAt(0).toUpperCase()}
                         </div>
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="flex justify-between items-start mb-1">
-                          <p className="font-semibold text-gray-800">{review.userName}</p>
-                          <div className="flex items-center">
+                        <div className="flex justify-between items-start mb-2">
+                          <p className="font-semibold text-gray-100 text-lg tracking-wide">{review.userName}</p>
+                          <div className="flex items-center bg-slate-900/50 px-3 py-1 rounded-full border border-white/5">
                             {[...Array(5)].map((_, i) => (
                               <span
                                 key={i}
-                                className={`text-lg ${i < review.rating ? 'text-yellow-400' : 'text-gray-300'}`}
+                                className={`text-md ${i < review.rating ? 'text-amber-400' : 'text-slate-600'}`}
                               >
                                 ★
                               </span>
                             ))}
                           </div>
                         </div>
-                        <p className="text-gray-600 mb-2">{review.comment}</p>
-                        <div className="text-xs text-gray-400">
+                        <p className="text-gray-300 mb-3 leading-relaxed">{review.comment}</p>
+                        <div className="text-xs text-gray-500 font-medium tracking-wider uppercase">
                           {new Date(review.createdAt).toLocaleDateString('en-US', {
                             year: 'numeric',
                             month: 'long',
@@ -558,12 +558,12 @@ const RoomBooking = () => {
                           })}
                         </div>
                         {review.userId === currentUserId && (
-                          <div className="mt-2 flex gap-2">
+                          <div className="mt-4 flex gap-3">
                             <motion.button
                               whileHover={{ scale: 1.05 }}
                               whileTap={{ scale: 0.95 }}
                               onClick={() => handleEditReview(review)}
-                              className="bg-blue-600 text-white px-3 py-1 rounded-lg text-sm"
+                              className="text-amber-400 border border-amber-400/30 hover:bg-amber-400/10 px-4 py-1.5 rounded-full text-sm font-medium transition-colors"
                             >
                               Edit
                             </motion.button>
@@ -571,7 +571,7 @@ const RoomBooking = () => {
                               whileHover={{ scale: 1.05 }}
                               whileTap={{ scale: 0.95 }}
                               onClick={() => handleDeleteReview(review._id)}
-                              className="bg-red-600 text-white px-3 py-1 rounded-lg text-sm"
+                              className="text-rose-400 border border-rose-400/30 hover:bg-rose-400/10 px-4 py-1.5 rounded-full text-sm font-medium transition-colors"
                             >
                               Delete
                             </motion.button>

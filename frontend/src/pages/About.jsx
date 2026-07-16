@@ -33,37 +33,39 @@ const About = () => {
       </section>
 
       {/* Our Story Section */}
-      <section className="py-32 max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center">
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          className="space-y-8"
-        >
-          <div className="space-y-4">
-            <h2 className="text-sm font-black text-blue-600 uppercase tracking-[0.4em]">Our Core</h2>
-            <h3 className="text-5xl md:text-6xl font-black text-gray-900 leading-tight">Crafting Memories<br />Since Day One.</h3>
-          </div>
-          <p className="text-xl text-gray-500 leading-relaxed font-serif font-light">
-            Born from a passion for true hospitality, Anuthama Villa was designed as a sanctuary for those who seek the extraordinary. Every stone, every light, and every smile is intentional.
-          </p>
-          <p className="text-lg text-gray-600">
-            We offer luxury and comfort at affordable prices. Our goal is to make your stay as comfortable and enjoyable as possible, whether you're here for business or leisure. Our experienced team is always here to provide exceptional service.
-          </p>
-        </motion.div>
+      <section className="py-32 bg-[#f8fbff]">
+        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center">
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="space-y-8 bg-white rounded-[3rem] p-12 border border-gray-100 shadow-[0_35px_120px_-80px_rgba(15,23,42,0.18)]"
+          >
+            <div className="space-y-4">
+              <h2 className="text-sm font-black text-blue-600 uppercase tracking-[0.4em]">Our Core</h2>
+              <h3 className="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 leading-tight">Crafting Memories<br />Since Day One.</h3>
+            </div>
+            <p className="text-xl text-gray-600 leading-relaxed font-serif font-light">
+              Born from a passion for true hospitality, Anuthama Villa was designed as a sanctuary for those who seek the extraordinary. Every stone, every light, and every smile is intentional.
+            </p>
+            <p className="text-lg text-gray-500 leading-relaxed">
+              We offer luxury and comfort at affordable prices. Our goal is to make your stay as comfortable and enjoyable as possible, whether you're here for business or leisure. Our experienced team is always here to provide exceptional service.
+            </p>
+          </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          className="relative aspect-square rounded-[3rem] overflow-hidden shadow-2xl"
-        >
-          <img
-            src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=2070"
-            alt="Interior"
-            className="w-full h-full object-cover"
-          />
-        </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="relative aspect-square rounded-[3rem] overflow-hidden border border-gray-100 shadow-2xl"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=2070"
+              alt="Interior"
+              className="w-full h-full object-cover"
+            />
+          </motion.div>
+        </div>
       </section>
 
       {/* Mission Section - Dark */}

@@ -106,7 +106,7 @@ function App() {
     <CookiesProvider>
       <BrowserRouter>
         <AuthProvider>
-          <div className="min-h-screen bg-[#fafafa]">
+          <div className="min-h-screen w-full bg-[#fafafa]">
             <NavbarSelector />
 
             <ToastContainer position="top-right" autoClose={3000} />

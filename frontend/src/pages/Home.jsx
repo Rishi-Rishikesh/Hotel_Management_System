@@ -22,7 +22,7 @@ const Home = () => {
     <div className="bg-white selection:bg-blue-100 selection:text-blue-900 overflow-x-hidden">
 
       {/* ── Hero ── */}
-      <section className="relative min-h-screen flex items-center bg-[#fafafa] overflow-hidden">
+      <section className="relative min-h-screen w-full flex items-center bg-[#fafafa] overflow-hidden">
         {/* bg blobs */}
         <div className="absolute top-0 right-0 w-1/2 h-full bg-[#eef2f7] -skew-x-6 translate-x-1/4 -z-10" />
         <motion.div
@@ -32,7 +32,7 @@ const Home = () => {
           className="absolute top-20 left-10 w-72 h-72 bg-blue-100/40 rounded-full blur-[120px] -z-10"
         />
 
-        <div className="w-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 grid lg:grid-cols-2 gap-12 items-center py-28">
+        <div className="w-full px-4 sm:px-8 lg:px-16 xl:px-24 grid lg:grid-cols-2 gap-12 items-center py-28 pt-36">
 
           {/* Left */}
           <motion.div
@@ -50,7 +50,7 @@ const Home = () => {
 
             <motion.h1
               variants={itemVariants}
-              className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black text-gray-900 leading-[0.95] tracking-tighter"
+              className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black text-gray-900 leading-[0.95] tracking-tighter break-words"
             >
               Timeless<br />
               <span className="italic font-serif font-light text-blue-600">Sophistication.</span>
@@ -110,9 +110,9 @@ const Home = () => {
             initial={{ opacity: 0, x: 80 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-full"
+            className="relative w-full mt-8 lg:mt-0"
           >
-            <div className="relative aspect-[4/5] w-full rounded-[2.5rem] overflow-hidden shadow-2xl group bg-gray-100">
+            <div className="relative aspect-[4/5] w-full max-h-[600px] rounded-[2.5rem] overflow-hidden shadow-2xl group bg-gray-100">
               <img
                 src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&q=80&w=2070"
                 alt="Anuthama Villa"

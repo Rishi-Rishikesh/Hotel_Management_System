@@ -46,14 +46,18 @@ const Navbar = () => {
     navigate("/login");
   };
 
-  const navLinks = [
+  const baseLinks = [
     { name: "Home", path: "/", icon: Home },
-    { name: "Dashboard", path: "/dashboard", icon: User },
     { name: "About", path: "/about", icon: Info },
-    { name: "Rooms", path: "/roombooking", icon: BedDouble },
-    { name: "Dining", path: "/foodordering", icon: Coffee },
     { name: "Contact", path: "/contactus", icon: Mail },
   ];
+
+  const authLinks = [
+    { name: "Rooms", path: "/roombooking", icon: BedDouble },
+    { name: "Dining", path: "/foodordering", icon: Coffee },
+  ];
+
+  const navLinks = token ? [...baseLinks, ...authLinks] : baseLinks;
 
   const getDashboardPath = () => {
     if (role === "Admin") return "/guestdashboard";

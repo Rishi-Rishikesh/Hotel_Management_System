@@ -22,20 +22,31 @@ if (!admin.apps.length) {
     let serviceAccount = null;
     let successfulPath = null;
 
-    for (const path of pathsToTry) {
+    if (process.env.FIREBASE_SERVICE_ACCOUNT) {
       try {
-        console.log("Checking for Firebase key at:", path);
-        const content = readFileSync(path, "utf8");
-        serviceAccount = JSON.parse(content);
-        successfulPath = path;
-        break; // Found it!
+        serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+        successfulPath = "FIREBASE_SERVICE_ACCOUNT env var";
       } catch (e) {
-        // Continue to next possible path
+        throw new Error("Invalid JSON in FIREBASE_SERVICE_ACCOUNT environment variable.");
       }
     }
 
     if (!serviceAccount) {
-      throw new Error(`Could not find serviceAccountKey.json. Tried: ${pathsToTry.join(", ")}`);
+      for (const path of pathsToTry) {
+        try {
+          console.log("Checking for Firebase key at:", path);
+          const content = readFileSync(path, "utf8");
+          serviceAccount = JSON.parse(content);
+          successfulPath = path;
+          break; // Found it!
+        } catch (e) {
+          // Continue to next possible path
+        }
+      }
+    }
+
+    if (!serviceAccount) {
+      throw new Error(`Could not find serviceAccountKey.json. Tried: ${pathsToTry.join(", ")} and FIREBASE_SERVICE_ACCOUNT env var.`);
     }
 
     console.log("✅ Successfully loaded Firebase key from:", successfulPath);

@@ -16,8 +16,6 @@ const guestSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 
-guestSchema.index({ firebaseUid: 1 }); // For authMiddleware.js
-guestSchema.index({ email: 1 }); // For login and uniqueness
 guestSchema.index({ fname: 1 });
 
 export default mongoose.model("Guest", guestSchema);

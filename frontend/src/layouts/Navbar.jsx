@@ -27,6 +27,7 @@ const Navbar = () => {
   const { role, token, setRole, setToken } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const isAboutPage = location.pathname === "/about";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -69,7 +70,7 @@ const Navbar = () => {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${isScrolled
+      className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${(isScrolled || isAboutPage)
         ? "bg-white/90 backdrop-blur-xl shadow-xl py-3 border-b border-gray-100"
         : "bg-transparent py-6"
         }`}

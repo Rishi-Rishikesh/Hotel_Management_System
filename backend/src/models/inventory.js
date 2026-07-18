@@ -13,8 +13,6 @@ const InventorySchema = new Schema({
   updatedBy: { type: Schema.Types.ObjectId, ref: "Guest" },
 });
 
-// Indexes for performance
 InventorySchema.index({ category: 1 });
-InventorySchema.index({ pname: 1 });
 
 export default model("Inventory", InventorySchema);

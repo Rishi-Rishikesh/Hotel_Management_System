@@ -11,6 +11,5 @@ const hallSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-hallSchema.index({ number: 1 });
 
 export default mongoose.model("Hall", hallSchema);
